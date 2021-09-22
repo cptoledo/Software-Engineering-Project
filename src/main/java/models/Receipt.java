@@ -1,12 +1,10 @@
 package models;
 
-import java.util.Map;
-
 public class Receipt {
 
     private String customer;
     private String cashier;
-    private Object[] items;
+    private ItemOrder[] items;
     private int price;
     private int salesTax;
     private int total;
@@ -22,7 +20,7 @@ public class Receipt {
     public Receipt(
             String customer,
             String cashier,
-            Object[] items,
+            ItemOrder[] items,
             int price,
             int salesTax,
             int total) {
@@ -70,7 +68,7 @@ public class Receipt {
      * Get the array of items.
      * @return The array of items.
      */
-    public Object[] getItems() {
+    public ItemOrder[] getItems() {
         return items;
     }
 
@@ -78,7 +76,7 @@ public class Receipt {
      * Set the array of items.
      * @param items An array of items.
      */
-    public void setItems(Object[] items) {
+    public void setItems(ItemOrder[] items) {
         this.items = items;
     }
 
