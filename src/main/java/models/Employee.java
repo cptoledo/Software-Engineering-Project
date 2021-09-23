@@ -5,6 +5,16 @@ public class Employee {
     private String id;
     private String name;
 
+    public Employee(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Employee() {
+        this.id = "";
+        this.name = "";
+    }
+
     /**
      * Get the ID of the employee.
      * @return The ID of the employee.
