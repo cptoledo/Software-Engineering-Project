@@ -9,7 +9,7 @@ public class LoginInterface extends JFrame implements ActionListener {
     private JPanel panel;
     private JButton exitButton;
     private JTextField pinField;
-    private JTextPane textPane;
+    private JLabel label;
 
     public LoginInterface() {
         panel = new JPanel();
@@ -22,20 +22,18 @@ public class LoginInterface extends JFrame implements ActionListener {
         exitButton = new JButton("EXIT");
         exitButton.setSize(40, 20);
         panel.add(exitButton);
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
+        exitButton.addActionListener(this);
+        add(exitButton);
 
         pinField = new JTextField();
 
-        textPane = new JTextPane();
+        label = new JLabel();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == exitButton) {
 
+        }
     }
 }

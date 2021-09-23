@@ -9,9 +9,6 @@ import java.util.Map;
 public class POSSystemApplication {
 
     public static void main(String[] args) {
-        EmployeeManager employeeManager = new EmployeeManager();
-        employeeManager.newEmployee("1255","James");
-
-        System.out.print("Yes");
+        System.out.print(((int) (Math.random() * 9999)) + "");
     }
 }

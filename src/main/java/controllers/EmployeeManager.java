@@ -4,13 +4,15 @@ import models.Employee;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class EmployeeManager {
 
     private HashMap<String, Employee> employeeMap = new HashMap<>();
+    private List<String> ids;
 
-    public HashMap<String, Employee> getEmployees() {
+    public EmployeeManager() {
         HashMap<String, Employee> employeeMap = new HashMap<>();
 
         File file = new File("employeedata.txt");
@@ -27,16 +29,21 @@ public class EmployeeManager {
                 employee.setName(dataSplit[1]);
 
                 employeeMap.put(employee.getId(), employee);
+                ids.add(employee.getId());
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         this.employeeMap = employeeMap;
-        return this.employeeMap;
     }
 
-    public void newEmployee(String id, String name) {
+    public HashMap<String, Employee> getEmployees() {
+        return employeeMap;
+    }
+
+    public void addEmployee(String name) {
+        String id = Integer.toString((int) (Math.random() * 100));
         String newEmployee = "\n" + id + "," + name;
 
         try {
@@ -46,5 +53,9 @@ public class EmployeeManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void removeEmployee(String id) {
+
     }
 }
