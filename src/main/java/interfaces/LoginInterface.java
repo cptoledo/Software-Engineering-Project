@@ -54,6 +54,10 @@ public class LoginInterface extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    public void setInvalidLabel(String text) {
+        invalidLabel.setText(text);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == exitButton) {

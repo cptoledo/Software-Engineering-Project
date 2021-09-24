@@ -2,6 +2,7 @@ package models;
 
 public class Receipt {
 
+    private String time;
     private String customer;
     private String cashier;
     private ItemOrder[] items;
@@ -11,25 +12,44 @@ public class Receipt {
 
     /**
      * Construct a Receipt object to store information pertaining to the pizza shop order.
-     * @param customer
-     * @param cashier
-     * @param price
-     * @param salesTax
-     * @param total
+     * @param time          The time the order was processed.
+     * @param customer      The customer name on the order.
+     * @param cashier       The cashier who processed the order.
+     * @param price         The price of the order.
+     * @param salesTax      The tax of the order.
+     * @param total         The total price of the order.
      */
     public Receipt(
+            String time,
             String customer,
             String cashier,
             ItemOrder[] items,
             int price,
             int salesTax,
             int total) {
+        this.time = time;
         this.customer = customer;
         this.cashier = cashier;
         this.items = items;
         this.price = price;
         this.salesTax = salesTax;
         this.total = total;
+    }
+
+    /**
+     * Get the time.
+     * @return The time.
+     */
+    public String getTime() {
+        return time;
+    }
+
+    /**
+     * Set the time.
+     * @param time A time.
+     */
+    private void setTime(String time) {
+        this.time = time;
     }
 
     /**

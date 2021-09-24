@@ -85,12 +85,14 @@ public class EmployeeManager {
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
 
             int numRecords = 0;
+            boolean match = false;
             while (scanner.hasNext()) {
                 String data = scanner.nextLine();
                 String[] dataSplit = data.split(",");
 
                 if (!id.equals(dataSplit[0])) {
                     writer.append(data).append("\n");
+                    match = true;
                 }
                 numRecords++;
             }
@@ -98,11 +100,15 @@ public class EmployeeManager {
             writer.close();
 
             if (numRecords > 1) {
-                oldFile.delete();
-                File dump = new File("employeedata.txt");
-                newFile.renameTo(dump);
+                if (match) {
+                    oldFile.delete();
+                    File dump = new File("employeedata.txt");
+                    newFile.renameTo(dump);
 
-                this.employeeMap = getEmployees();
+                    this.employeeMap = getEmployees();
+                } else {
+                    //TODO if employee id does not exist.
+                }
             } else {
                 newFile.delete();
             }
