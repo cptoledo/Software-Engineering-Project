@@ -14,8 +14,12 @@ public class EmployeeManager {
     private List<String> ids;
 
     public EmployeeManager() {
+        this.employeeMap = getEmployees();
+    }
+
+    public HashMap<String, Employee> getEmployees() {
         HashMap<String, Employee> employeeMap = new HashMap<>();
-        ids = new ArrayList<>();
+        List<String> ids = new ArrayList<>();
 
         File file = new File("employeedata.txt");
 
@@ -38,14 +42,12 @@ public class EmployeeManager {
             e.printStackTrace();
         }
         this.employeeMap = employeeMap;
-    }
+        this.ids = ids;
 
-    public HashMap<String, Employee> getEmployees() {
-        return employeeMap;
+        return this.employeeMap;
     }
 
     public void addEmployee(String name) {
-        List<String> ids = new ArrayList<>();
         String id = String.format("%04d", (int) (Math.random() * 9999));
 
         boolean duplicate = true;
@@ -58,57 +60,52 @@ public class EmployeeManager {
                 }
             }
         }
-
         String newEmployee = "\n" + id + "," + name;
         Employee employee = new Employee(id, name);
 
-        modifyDataFile(newEmployee);
-        employeeMap.put(id, employee);
-        for (String searchId : employeeMap.keySet()) {
-            ids.add(searchId);
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("employeedata.txt", true));
+            writer.append(newEmployee);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        this.ids = ids;
+        employeeMap.put(id, employee);
+        ids.add(id);
     }
 
+    //TODO if employee id does not exist
     public void removeEmployee(String id) {
-        HashMap newEmployeeMap = new HashMap<>();
+        String tempFile = "temp.txt";
+        File oldFile = new File("employeedata.txt");
+        File newFile = new File(tempFile);
 
-        int index = 0;
         try {
-            File file = new File("employeedata.txt");
-            Scanner scanner = new Scanner(file);
+            Scanner scanner = new Scanner(oldFile);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
 
+            int numRecords = 0;
             while (scanner.hasNext()) {
                 String data = scanner.nextLine();
                 String[] dataSplit = data.split(",");
 
-                if (id.equals(dataSplit[0])) {
-                    modifyDataFile("");
-                    newEmployeeMap = getEmployees();
-                    ids.remove(index);
+                if (!id.equals(dataSplit[0])) {
+                    writer.append(data).append("\n");
                 }
-                index++;
+                numRecords++;
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        this.employeeMap = newEmployeeMap;
-    }
-
-    private void modifyDataFile(String line) {
-        try {
-            File file = new File("employeedata.txt");
-            PrintWriter printWriter = new PrintWriter(file);
-            BufferedWriter writer = new BufferedWriter(new FileWriter("employeedata.txt", true));
-            //clear file
-            printWriter.write("");
-
-            // Rewrite the file.
-            for (String key : employeeMap.keySet()) {
-                writer.append(key + "," + employeeMap.get(key).toString());
-            }
+            scanner.close();
             writer.close();
+
+            if (numRecords > 1) {
+                oldFile.delete();
+                File dump = new File("employeedata.txt");
+                newFile.renameTo(dump);
+
+                this.employeeMap = getEmployees();
+            } else {
+                newFile.delete();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
