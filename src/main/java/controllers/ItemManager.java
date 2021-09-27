@@ -12,7 +12,7 @@ public class ItemManager {
     public HashMap<String, Item> getItems() {
         HashMap<String, Item> itemMap = new HashMap<>();
 
-        File file = new File("itemdata.txt");
+        File file = new File("src/main/resources/itemdata.txt");
 
         try {
             Scanner scanner = new Scanner(file);

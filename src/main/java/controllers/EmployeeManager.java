@@ -21,7 +21,7 @@ public class EmployeeManager {
         HashMap<String, Employee> employeeMap = new HashMap<>();
         List<String> ids = new ArrayList<>();
 
-        File file = new File("employeedata.txt");
+        File file = new File("src/main/resources/employeedata.txt");
 
         try {
             Scanner scanner = new Scanner(file);
@@ -64,7 +64,7 @@ public class EmployeeManager {
         Employee employee = new Employee(id, name);
 
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("employeedata.txt", true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/employeedata.txt", true));
             writer.append(newEmployee);
             writer.close();
         } catch (IOException e) {
@@ -76,8 +76,8 @@ public class EmployeeManager {
 
     //TODO if employee id does not exist
     public void removeEmployee(String id) {
-        String tempFile = "temp.txt";
-        File oldFile = new File("employeedata.txt");
+        String tempFile = "src/main/resources/temp.txt";
+        File oldFile = new File("src/main/resources/employeedata.txt");
         File newFile = new File(tempFile);
 
         try {
@@ -102,7 +102,7 @@ public class EmployeeManager {
             if (numRecords > 1) {
                 if (match) {
                     oldFile.delete();
-                    File dump = new File("employeedata.txt");
+                    File dump = new File("src/main/resources/employeedata.txt");
                     newFile.renameTo(dump);
 
                     this.employeeMap = getEmployees();
