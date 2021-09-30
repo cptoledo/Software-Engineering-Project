@@ -40,7 +40,8 @@ public class MainInterface extends JFrame implements ActionListener {
 
     public MainInterface() {
         optionsPanel = new JPanel();
-        optionsPanel.setLayout(new GridLayout(1, 3));
+        optionsPanel.setPreferredSize(new Dimension(900, 300));
+        optionsPanel.setLayout(new GridLayout(1, 3, 50, 50));
 
         order = new JButton("ORDER");
         order.setBackground(Color.GREEN);
@@ -59,7 +60,6 @@ public class MainInterface extends JFrame implements ActionListener {
 
         mainPanel = new JPanel();
         mainPanel.setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
-        mainPanel.setLayout(new GridLayout(1, 3));
         mainPanel.add(optionsPanel);
 
         setContentPane(mainPanel);

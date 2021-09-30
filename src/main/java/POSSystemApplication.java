@@ -2,6 +2,8 @@ import controllers.EmployeeManager;
 import interfaces.LoginInterface;
 import interfaces.MainInterface;
 
+import java.awt.*;
+
 public class POSSystemApplication {
 
     public static void main(String[] args) {
@@ -12,6 +14,5 @@ public class POSSystemApplication {
         //employeeManager.addEmployee("Jacob");
         //employeeManager.removeEmployee("2082");
         //System.out.print(employeeManager.getEmployees());
-
     }
 }
