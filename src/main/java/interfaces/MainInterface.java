@@ -57,10 +57,13 @@ public class MainInterface extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == order) {
-            mainPanel.remove(optionsPanel);
+            mainPanel.removeAll();
             mainPanel.add(new OrderInterface());
             mainPanel.revalidate();
             mainPanel.repaint();
+        } else if (e.getSource() == logout) {
+            mainPanel.removeAll();
+            new LoginInterface();
         }
     }
 }

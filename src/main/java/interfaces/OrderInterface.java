@@ -30,7 +30,6 @@ public class OrderInterface extends JPanel implements ActionListener {
     private JPanel checkoutPanel;
 
     public OrderInterface() {
-        setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
         setLayout(new GridLayout(5, 10));
         pizza = new JButton("PIZZA");
         pizza.addActionListener(this);
@@ -39,6 +38,8 @@ public class OrderInterface extends JPanel implements ActionListener {
         soda = new JButton("SODA");
         soda.addActionListener(this);
         add(soda);
+
+        setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
     }
 
     @Override
