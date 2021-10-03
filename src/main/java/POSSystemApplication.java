@@ -1,7 +1,5 @@
 import controllers.EmployeeManager;
-import interfaces.LoginInterface;
-import interfaces.LoginUI;
-import interfaces.MainInterface;
+import interfaces.*;
 
 import java.awt.*;
 
@@ -15,6 +13,8 @@ public class POSSystemApplication {
         //employeeManager.addEmployee("Jacob");
         //employeeManager.removeEmployee("2082");
         //System.out.print(employeeManager.getEmployees());
-        LoginUI login = new LoginUI();
+        //LoginUI login = new LoginUI();
+        //MainUI main = new MainUI();
+        OrderUI order = new OrderUI();
     }
 }
