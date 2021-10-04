@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+// TODO: Create function to edit names on each account.
 public class EmployeeManager {
 
     private HashMap<String, Employee> employeeMap;
@@ -47,14 +48,14 @@ public class EmployeeManager {
         return this.employeeMap;
     }
 
-    public void addEmployee(String name) {
-        String id = String.format("%04d", (int) (Math.random() * 9999));
-
+    // TODO: PIN should be created by user, not randomly generated.
+    public void addEmployee(String name, String id) {
         boolean duplicate = true;
         while (duplicate) {
             for (String searchId : this.ids) {
                 if (id.equals(searchId)) {
-                    id = String.format("%04d", (int) (Math.random() * 9999));
+                    // TODO: Reprompt user to enter another PIN.
+                    //id = String.format("%04d", (int) (Math.random() * 9999));
                 } else {
                     duplicate = false;
                 }

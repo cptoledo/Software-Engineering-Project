@@ -5,12 +5,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// TODO: Merge MainUI and other sub interfaces.
 public class MainUI extends JFrame implements ActionListener {
 
     private JButton orderButton;
     private JButton accountButton;
     private JButton logoutButton;
     private JPanel optionsPanel;
+    private JButton button1;
+    private JButton button2;
 
     public MainUI() {
         add(optionsPanel);

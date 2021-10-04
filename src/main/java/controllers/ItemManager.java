@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+// TODO: Add function to be able to edit prices and sales tax rate.
 public class ItemManager {
 
     public HashMap<String, Item> getItems() {
