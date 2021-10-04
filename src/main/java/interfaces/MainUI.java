@@ -17,6 +17,7 @@ public class MainUI extends JFrame implements ActionListener {
 
     public MainUI() {
         add(optionsPanel);
+        add(new OrderUI());
         setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
         setUndecorated(true);
         setResizable(false);
