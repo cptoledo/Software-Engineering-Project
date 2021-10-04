@@ -13,8 +13,8 @@ public class POSSystemApplication {
         //employeeManager.addEmployee("Jacob");
         //employeeManager.removeEmployee("2082");
         //System.out.print(employeeManager.getEmployees());
-        //LoginUI login = new LoginUI();
+        LoginUI login = new LoginUI();
         //MainUI main = new MainUI();
-        OrderUI order = new OrderUI();
+        //OrderUI order = new OrderUI();
     }
 }
