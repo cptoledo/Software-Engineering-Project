@@ -48,7 +48,14 @@ public class EmployeeManager {
         return this.employeeMap;
     }
 
+    // TODO: Set max employees to 20.
     // TODO: PIN should be created by user, not randomly generated.
+
+    /**
+     * Method to add an employee to the system.
+     * @param name  An employee name.
+     * @param id    An employee PIN/ID.
+     */
     public void addEmployee(String name, String id) {
         boolean duplicate = true;
         while (duplicate) {
@@ -76,8 +83,13 @@ public class EmployeeManager {
     }
 
     //TODO if employee id does not exist
+
+    /**
+     * Method to remove an employee from the system.
+     * @param id A search PIN/ID.
+     */
     public void removeEmployee(String id) {
-        String tempFile = "src/main/resources/temp.txt";
+        String tempFile = "src/main/resources/tempemployeedata.txt";
         File oldFile = new File("src/main/resources/employeedata.txt");
         File newFile = new File(tempFile);
 
@@ -110,6 +122,92 @@ public class EmployeeManager {
                 } else {
                     //TODO if employee id does not exist.
                 }
+            } else {
+                newFile.delete();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method to change an employee's name.
+     * @param id        A search PIN/ID.
+     * @param newName   A name.
+     */
+    public void changeName(String id, String newName) {
+        String tempFile = "src/main/resources/tempemployeedata.txt";
+        File oldFile = new File("src/main/resources/employeedata.txt");
+        File newFile = new File(tempFile);
+
+        try {
+            Scanner scanner = new Scanner(oldFile);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
+
+            boolean match = false;
+            while (scanner.hasNext()) {
+                String data = scanner.nextLine();
+                String[] dataSplit = data.split(",");
+
+                if (id.equals(dataSplit[0])) {
+                    writer.append(dataSplit[0]).append(",").append(newName).append("\n");
+                    match = true;
+                } else {
+                    writer.append(data);
+                }
+            }
+            scanner.close();
+            writer.close();
+
+            if (match) {
+                oldFile.delete();
+                File dump = new File("src/main/resources/employeedata.txt");
+                newFile.renameTo(dump);
+
+                this.employeeMap = getEmployees();
+            } else {
+                newFile.delete();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method to change an employee's PIN/ID.
+     * @param id    A search PIN/ID.
+     * @param newId A PIN/ID.
+     */
+    public void changeId(String id, String newId) {
+        String tempFile = "src/main/resources/tempemployeedata.txt";
+        File oldFile = new File("src/main/resources/employeedata.txt");
+        File newFile = new File(tempFile);
+
+        try {
+            Scanner scanner = new Scanner(oldFile);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
+
+            boolean match = false;
+            while (scanner.hasNext()) {
+                String data = scanner.nextLine();
+                String[] dataSplit = data.split(",");
+
+                if (id.equals(dataSplit[0])) {
+                    writer.append(newId).append(",").append(dataSplit[1]).append("\n");
+                    match = true;
+                } else {
+                    writer.append(data);
+                }
+            }
+            scanner.close();
+            writer.close();
+
+            if (match) {
+                oldFile.delete();
+                File dump = new File("src/main/resources/employeedata.txt");
+                newFile.renameTo(dump);
+
+                this.employeeMap = getEmployees();
             } else {
                 newFile.delete();
             }

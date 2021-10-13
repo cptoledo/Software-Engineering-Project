@@ -9,4 +9,5 @@ public class AccountsOptionsScreen {
     private JButton changePINButton;
     private JButton backButton;
     private JPanel mainPanel;
+    private JButton changeNameButton;
 }

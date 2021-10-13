@@ -1,10 +1,14 @@
 package interfaces;
 
+import controllers.ItemManager;
+import models.Item;
+
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 public class PizzaOptionsScreen extends JPanel {
 
@@ -43,9 +47,12 @@ public class PizzaOptionsScreen extends JPanel {
     private int topping;        // 0: no topping, 1: pepperoni, 2: sausage, 3: bacon, 4: extra cheese, 5:mushroom, 6: onion, 7: peppers, 8: pineapple
     private int itemId = 0;
 
+    private HashMap<Integer, Item> itemMap = new ItemManager().getItems();
+
+    private int quantity;
+
     // TODO: Work on checkout mechanic.
     public PizzaOptionsScreen() {
-
         add(mainPanel);
         setVisible(true);
 
@@ -108,6 +115,7 @@ public class PizzaOptionsScreen extends JPanel {
                 if (Integer.parseInt(value) > 100) {
                     addToCartButton.setEnabled(false);
                     label.setText("Must be <= 100");
+                    quantity = Integer.parseInt(value);
                 } else {
                     addToCartButton.setEnabled(true);
                     label.setText("");
@@ -117,17 +125,12 @@ public class PizzaOptionsScreen extends JPanel {
 
         addToCartButton.addActionListener(e -> {
             itemId = (pizzaSize * 10) + (topping + 1);
-            MainScreen.cart.add(itemId);
+            MainScreen.cart.add(itemId, quantity);
         });
     }
 
     // TODO: Display button is 'pressed' mode when selected.
     private void setPressed(JButton button) {
-            for (JButton dButton : toppingButtons) {
-                dButton.setOpaque(false);
-                //button.getModel().setPressed(true);
-            }
-            pineappleButton.setOpaque(false);
-            button.setOpaque(true);
+        button.getModel().setPressed(true);
     }
 }

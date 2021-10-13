@@ -37,7 +37,7 @@ public class LoginScreen extends JFrame {
                 // Check if PIN is registered in the system.
                 if (pinField.getText().length() == 4) {
                     if (employeeMap.containsKey(value)) {
-                        new MainScreen();
+                        new MainScreen(null);
                         dispose();
                     } else {
                         pinField.setText("");

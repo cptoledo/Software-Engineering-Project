@@ -10,7 +10,7 @@ public class MainScreen extends JFrame {
     private JPanel mainPanel;
     private JTabbedPane tabbedPane;
 
-    private JPanel settingsPanel;
+    private JPanel optionsPanel;
     private JButton accountsButton;
     private JButton shopButton;
     private JButton logoutButton;
@@ -24,10 +24,13 @@ public class MainScreen extends JFrame {
     private JTable checkoutList;
     private JButton checkoutButton;
     private JButton clearCartButton;
+    private JPanel settingsPanel;
 
     public static CheckoutCart cart;
 
-    public MainScreen() {
+    public int quantity;
+
+    public MainScreen(JTable table) {
 
         setContentPane(mainPanel);
         setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
@@ -47,6 +50,7 @@ public class MainScreen extends JFrame {
             new LoginScreen();
             dispose();
         });
+
     }
 
     private void refreshCheckoutPanel() {
