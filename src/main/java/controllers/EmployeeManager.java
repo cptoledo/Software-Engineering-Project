@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-// TODO: Create function to edit names on each account.
+// TODO: Create method to edit names on each account.
 public class EmployeeManager {
 
     private HashMap<String, Employee> employeeMap;

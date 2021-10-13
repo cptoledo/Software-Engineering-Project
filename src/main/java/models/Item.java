@@ -2,7 +2,7 @@ package models;
 
 public class Item {
 
-    private String id;
+    private int id;
     private String description;
     private double price;
 
@@ -12,7 +12,7 @@ public class Item {
      * @param description   The description of the item.
      * @param price         The price of the item.
      */
-    public Item(String id, String description, double price) {
+    public Item(int id, String description, double price) {
         this.id = id;
         this.description = description;
         this.price = price;
@@ -22,7 +22,7 @@ public class Item {
      * Construct an empty Item object.
      */
     public Item() {
-        this.id = "";
+        this.id = 0;
         this.description = "";
         this.price = 0;
     }
@@ -31,7 +31,7 @@ public class Item {
      * Get the ID.
      * @return The ID.
      */
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -39,7 +39,7 @@ public class Item {
      * Set the ID.
      * @param id An ID.
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -10,8 +10,8 @@ import java.util.Scanner;
 // TODO: Add function to be able to edit prices and sales tax rate.
 public class ItemManager {
 
-    public HashMap<String, Item> getItems() {
-        HashMap<String, Item> itemMap = new HashMap<>();
+    public HashMap<Integer, Item> getItems() {
+        HashMap<Integer, Item> itemMap = new HashMap<>();
 
         File file = new File("src/main/resources/itemdata.txt");
 
@@ -23,7 +23,7 @@ public class ItemManager {
                 String[] dataSplit = data.split(",");
 
                 Item item = new Item();
-                item.setId(dataSplit[0]);
+                item.setId(Integer.parseInt(dataSplit[0]));
                 item.setDescription(dataSplit[1]);
                 item.setPrice(Double.parseDouble(dataSplit[2]));
 
