@@ -2,21 +2,22 @@ package cart;
 
 import controllers.ItemManager;
 import models.Item;
+import models.ItemOrder;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CheckoutCart {
 
     private final HashMap<Integer, Item> itemMap = new ItemManager().getItems();
-    protected ArrayList<Item> cart = new ArrayList<>();
-    private JTable table;
+    private ArrayList<ItemOrder> cart = new ArrayList<>(200);
 
-    // TODO: Change add to add an item plus is quantity.
     public void add(int id, int quantity) {
         if (itemMap.containsKey(id)) {
-            cart.add(itemMap.get(id));
+            String description = itemMap.get(id).getDescription();
+            double price = itemMap.get(id).getPrice();
+            ItemOrder itemOrder = new ItemOrder(description, quantity, price);
+            cart.add(itemOrder);
         }
     }
 
@@ -24,11 +25,12 @@ public class CheckoutCart {
         cart.clear();
     }
 
-    public ArrayList<Item> getCart() {
+    public ArrayList<ItemOrder> getCart() {
         return cart;
     }
 
     public void checkOut() {
         //TODO
+        cart.clear();
     }
 }

@@ -24,14 +24,17 @@ public class MainScreen extends JFrame {
     private JTable checkoutList;
     private JButton checkoutButton;
     private JButton clearCartButton;
+
     private JPanel settingsPanel;
 
     public static CheckoutCart cart;
 
-    public int quantity;
+    public static int totalSodas;
+    public static int totalPizzas;
 
+    //TODO: Properly add items to cart.
+    //TODO: Update checkout list whenever an item is added to the cart.
     public MainScreen(JTable table) {
-
         setContentPane(mainPanel);
         setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
         setUndecorated(true);
@@ -39,21 +42,46 @@ public class MainScreen extends JFrame {
 
         orderSelectionPanel.setLayout(new GridLayout());
 
-        // TODO: PizzaOptionsScreen not appearing on action.
         pizzaButton.addActionListener(e -> {
+            clearPanel(orderSelectionPanel);
             orderSelectionPanel.add(new PizzaOptionsScreen());
-            orderSelectionPanel.revalidate();
-            orderSelectionPanel.repaint();
+            refreshPanel(orderSelectionPanel);
+        });
+
+        sodaButton.addActionListener(e -> {
+            clearPanel(orderSelectionPanel);
+            orderSelectionPanel.add(new SodaOptionsScreen());
+            refreshPanel(orderSelectionPanel);
+        });
+
+        clearCartButton.addActionListener(e -> {
+            cart.clear();
+            totalPizzas = 0;
+            totalPizzas = 0;
+        });
+
+        checkoutButton.addActionListener(e -> {
+            cart.checkOut();
+            totalPizzas = 0;
+            totalSodas = 0;
         });
 
         logoutButton.addActionListener(e -> {
             new LoginScreen();
             dispose();
         });
-
     }
 
-    private void refreshCheckoutPanel() {
+    private void clearPanel(JPanel panel) {
+        panel.removeAll();
+    }
+
+    public static void refreshPanel(JPanel panel) {
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    public void refreshCart() {
         checkoutPanel.revalidate();
         checkoutPanel.repaint();
     }

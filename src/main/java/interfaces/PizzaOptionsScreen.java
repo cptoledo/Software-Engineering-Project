@@ -6,6 +6,7 @@ import models.Item;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -27,27 +28,17 @@ public class PizzaOptionsScreen extends JPanel {
     private JButton peppersButton;
     private JButton pineappleButton;
     private JButton noToppingButton;
-    private final Collection<JButton> toppingButtons = new ArrayList<JButton>() {{
-        add(pepperoniButton);
-        add(sausageButton);
-        add(baconButton);
-        add(extraCheeseButton);
-        add(mushroomButton);
-        add(onionButton);
-        add(peppersButton);
-        add(noToppingButton);
-    }};
 
     private JTextField quantityField;
     private JButton addToCartButton;
 
     private JLabel label;
+    private JLabel sizeLabel;
+    private JLabel toppingLabel;
 
-    private int pizzaSize;      // 0: small, 1: medium, 2: large
-    private int topping;        // 0: no topping, 1: pepperoni, 2: sausage, 3: bacon, 4: extra cheese, 5:mushroom, 6: onion, 7: peppers, 8: pineapple
-    private int itemId = 0;
-
-    private HashMap<Integer, Item> itemMap = new ItemManager().getItems();
+    private int pizzaSize = -1;     // 0: small, 1: medium, 2: large
+    private int topping = -1;       // 0: no topping, 1: pepperoni, 2: sausage, 3: bacon, 4: extra cheese, 5:mushroom, 6: onion, 7: peppers, 8: pineapple
+    private int itemId = -1;
 
     private int quantity;
 
@@ -58,79 +49,108 @@ public class PizzaOptionsScreen extends JPanel {
 
         smallButton.addActionListener(e -> {
             pizzaSize = 0;
-            setPressed(smallButton);
+            sizeLabel.setText("SMALL");
         });
         mediumButton.addActionListener(e -> {
             pizzaSize = 1;
-            setPressed(mediumButton);
+            sizeLabel.setText("MEDIUM");
         });
         largeButton.addActionListener(e -> {
             pizzaSize = 2;
-            setPressed(largeButton);
+            sizeLabel.setText("LARGE");
         });
         noToppingButton.addActionListener(e -> {
             topping = 0;
-            setPressed(noToppingButton);
+            toppingLabel.setText("NONE");
         });
         pepperoniButton.addActionListener(e -> {
             topping = 1;
-            setPressed(pepperoniButton);
+            toppingLabel.setText("PEPPERONI");
         });
         sausageButton.addActionListener(e -> {
             topping = 2;
-            setPressed(sausageButton);
+            toppingLabel.setText("SAUSAGE");
         });
         baconButton.addActionListener(e -> {
             topping = 3;
-            setPressed(baconButton);
+            toppingLabel.setText("BACON");
         });
         extraCheeseButton.addActionListener(e -> {
             topping = 4;
-            setPressed(extraCheeseButton);
+            toppingLabel.setText("EXTRA CHEESE");
         });
         mushroomButton.addActionListener(e -> {
             topping = 5;
-            setPressed(mushroomButton);
+            toppingLabel.setText("MUSHROOM");
         });
         onionButton.addActionListener(e -> {
             topping = 6;
-            setPressed(onionButton);
+            toppingLabel.setText("ONION");
         });
         peppersButton.addActionListener(e -> {
             topping = 7;
-            setPressed(peppersButton);
+            toppingLabel.setText("PEPPERS");
         });
         pineappleButton.addActionListener(e -> {
             topping = 8;
-            setPressed(pineappleButton);
+            toppingLabel.setText("PINEAPPLE");
         });
 
-        quantityField.addKeyListener(new KeyAdapter() {
+        quantityField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // To allow only number inputs.
+                if (Character.isDigit(e.getKeyChar()) || e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
+                    quantityField.setEditable(true);
+                } else {
+                    quantityField.setEditable(false);
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
             @Override
             public void keyReleased(KeyEvent e) {
                 String value = quantityField.getText();
+                int tempQuantity = 0;
+                if (value.length() > 0) {
+                    tempQuantity = Integer.parseInt(value);
+                }
 
-                quantityField.setEditable(e.getKeyChar() >= '0' && e.getKeyChar() <= '9');
-
-                if (Integer.parseInt(value) > 100) {
+                if (MainScreen.totalPizzas + MainScreen.totalSodas + tempQuantity > 200) {
+                    addToCartButton.setEnabled(false);
+                    label.setText("Cart exceeds 200 items");
+                } else if (MainScreen.totalPizzas + tempQuantity > 100) {
+                    addToCartButton.setEnabled(false);
+                    label.setText("Cart exceeds 100 pizzas");
+                } else if (tempQuantity > 100) {
                     addToCartButton.setEnabled(false);
                     label.setText("Must be <= 100");
                     quantity = Integer.parseInt(value);
                 } else {
                     addToCartButton.setEnabled(true);
                     label.setText("");
+                    quantity = tempQuantity;
                 }
             }
         });
 
         addToCartButton.addActionListener(e -> {
-            itemId = (pizzaSize * 10) + (topping + 1);
-            MainScreen.cart.add(itemId, quantity);
-        });
-    }
+            if (pizzaSize < 0) {
+                label.setText("Must select size");
+            } else if (topping < 0) {
+                label.setText("Must select topping");
+            } else {
+                itemId = (pizzaSize * 10) + (topping + 1);
+                MainScreen.totalPizzas += quantity;
+                MainScreen.cart.add(itemId, quantity);
 
-    // TODO: Display button is 'pressed' mode when selected.
-    private void setPressed(JButton button) {
-        button.getModel().setPressed(true);
+                sizeLabel.setText("");
+                toppingLabel.setText("");
+                label.setText("");
+            }
+        });
     }
 }

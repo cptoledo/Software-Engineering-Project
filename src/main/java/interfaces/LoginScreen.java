@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.HashMap;
 
 public class LoginScreen extends JFrame {
@@ -26,16 +27,27 @@ public class LoginScreen extends JFrame {
         setResizable(false);
         setVisible(true);
 
-        pinField.addKeyListener(new KeyAdapter() {
+        pinField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // To allow only number inputs.
+                if (Character.isDigit(e.getKeyChar()) || e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
+                    pinField.setEditable(true);
+                } else {
+                    pinField.setEditable(false);
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
             @Override
             public void keyReleased(KeyEvent e) {
                 String value = pinField.getText();
 
-                // To allow only number inputs.
-                pinField.setEditable(e.getKeyChar() >= '0' && e.getKeyChar() <= '9');
-
                 // Check if PIN is registered in the system.
-                if (pinField.getText().length() == 4) {
+                if (pinField.getText().length() >= 4) {
                     if (employeeMap.containsKey(value)) {
                         new MainScreen(null);
                         dispose();
