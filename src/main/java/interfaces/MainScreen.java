@@ -1,6 +1,7 @@
 package interfaces;
 
 import cart.CheckoutCart;
+import models.Employee;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,13 +33,19 @@ public class MainScreen extends JFrame {
     public static int totalSodas;
     public static int totalPizzas;
 
+    public static Employee currentEmployee;
+
     //TODO: Properly add items to cart.
     //TODO: Update checkout list whenever an item is added to the cart.
-    public MainScreen(JTable table) {
+    public MainScreen(Employee employee) {
         setContentPane(mainPanel);
         setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
         setUndecorated(true);
         setVisible(true);
+
+        currentEmployee = employee;
+
+        cart = new CheckoutCart();
 
         orderSelectionPanel.setLayout(new GridLayout());
 
@@ -57,13 +64,15 @@ public class MainScreen extends JFrame {
         clearCartButton.addActionListener(e -> {
             cart.clear();
             totalPizzas = 0;
-            totalPizzas = 0;
+            totalSodas = 0;
         });
 
         checkoutButton.addActionListener(e -> {
             cart.checkOut();
             totalPizzas = 0;
             totalSodas = 0;
+
+            new ReceiptScreen(cart);
         });
 
         logoutButton.addActionListener(e -> {

@@ -40,7 +40,7 @@ public class PizzaOptionsScreen extends JPanel {
     private int topping = -1;       // 0: no topping, 1: pepperoni, 2: sausage, 3: bacon, 4: extra cheese, 5:mushroom, 6: onion, 7: peppers, 8: pineapple
     private int itemId = -1;
 
-    private int quantity;
+    private int quantity = 0;
 
     // TODO: Work on checkout mechanic.
     public PizzaOptionsScreen() {
@@ -128,7 +128,6 @@ public class PizzaOptionsScreen extends JPanel {
                 } else if (tempQuantity > 100) {
                     addToCartButton.setEnabled(false);
                     label.setText("Must be <= 100");
-                    quantity = Integer.parseInt(value);
                 } else {
                     addToCartButton.setEnabled(true);
                     label.setText("");
@@ -142,11 +141,20 @@ public class PizzaOptionsScreen extends JPanel {
                 label.setText("Must select size");
             } else if (topping < 0) {
                 label.setText("Must select topping");
+            } else if (quantityField.getText().length() == 0) {
+                label.setText("Must input quantity");
             } else {
                 itemId = (pizzaSize * 10) + (topping + 1);
                 MainScreen.totalPizzas += quantity;
                 MainScreen.cart.add(itemId, quantity);
 
+                // Reset all values
+                pizzaSize = -1;
+                topping = -1;
+                itemId = -1;
+                quantity = 0;
+
+                quantityField.setText("");
                 sizeLabel.setText("");
                 toppingLabel.setText("");
                 label.setText("");
