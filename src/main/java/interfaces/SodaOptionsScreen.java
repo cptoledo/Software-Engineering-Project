@@ -19,6 +19,7 @@ public class SodaOptionsScreen extends JPanel {
 
     private JTextField quantityField;
     private JButton addToCartButton;
+
     private JLabel label;
     private JLabel sodaLabel;
 
@@ -62,7 +63,7 @@ public class SodaOptionsScreen extends JPanel {
                     tempQuantity = Integer.parseInt(value);
                 }
 
-                if (MainScreen.totalPizzas + MainScreen.totalPizzas + tempQuantity > 200) {
+                if (MainScreen.totalPizzas + MainScreen.totalSodas + tempQuantity > 200) {
                     addToCartButton.setEnabled(false);
                     label.setText("Cart exceeds 200 items");
                 } else if (MainScreen.totalSodas + tempQuantity > 100) {
@@ -71,7 +72,6 @@ public class SodaOptionsScreen extends JPanel {
                 } else if (tempQuantity > 100) {
                     addToCartButton.setEnabled(false);
                     label.setText("Must be <= 100");
-                    quantity = Integer.parseInt(value);
                 } else {
                     addToCartButton.setEnabled(true);
                     label.setText("");
@@ -81,9 +81,20 @@ public class SodaOptionsScreen extends JPanel {
         });
 
         addToCartButton.addActionListener(e -> {
-            //TODO: If soda is not selected.
-            MainScreen.totalSodas += quantity;
-            MainScreen.cart.add(itemId, quantity);
+            if (itemId == -1) {
+                label.setText("Must select soda");
+            } else {
+                MainScreen.totalSodas += quantity;
+                MainScreen.cart.add(itemId, quantity);
+
+                // Reset all values
+                itemId = -1;
+                quantity = 0;
+
+                quantityField.setText("");
+                label.setText("");
+                sodaLabel.setText("");
+            }
         });
     }
 }

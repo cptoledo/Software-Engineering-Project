@@ -15,7 +15,7 @@ public class POSSystemApplication {
         //System.out.print(employeeManager.getEmployees());
 
         //MainScreen mainScreen = new MainScreen();
-        new LoginScreen();
-        //new MainScreen();
+        //new LoginScreen();
+        new ReceiptScreen(null);
     }
 }
