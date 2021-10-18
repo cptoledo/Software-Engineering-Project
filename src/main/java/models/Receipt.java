@@ -6,9 +6,9 @@ public class Receipt {
     private String customer;
     private String cashier;
     private ItemOrder[] items;
-    private int price;
-    private int salesTax;
-    private int total;
+    private double price;
+    private double salesTax;
+    private double total;
 
     /**
      * Construct a Receipt object to store information pertaining to the pizza shop order.
@@ -24,9 +24,9 @@ public class Receipt {
             String customer,
             String cashier,
             ItemOrder[] items,
-            int price,
-            int salesTax,
-            int total) {
+            double price,
+            double salesTax,
+            double total) {
         this.time = time;
         this.customer = customer;
         this.cashier = cashier;
@@ -104,7 +104,7 @@ public class Receipt {
      * Get the price of the order.
      * @return The price of the order.
      */
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -112,7 +112,7 @@ public class Receipt {
      * Set the price of the order.
      * @param price A price of the order.
      */
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -120,7 +120,7 @@ public class Receipt {
      * Get the tax of the price of the order.
      * @return The tax of the price of the order.
      */
-    public int getSalesTax() {
+    public double getSalesTax() {
         return salesTax;
     }
 
@@ -128,7 +128,7 @@ public class Receipt {
      * Set the tax of the price of the order.
      * @param salesTax A tax of the price of the order.
      */
-    public void setSalesTax(int salesTax) {
+    public void setSalesTax(double salesTax) {
         this.salesTax = salesTax;
     }
 
@@ -136,7 +136,7 @@ public class Receipt {
      * Get the total price of the order.
      * @return The total price of the order.
      */
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 
@@ -144,7 +144,7 @@ public class Receipt {
      * Set the total price of the order.
      * @param total A total price of the order.
      */
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 

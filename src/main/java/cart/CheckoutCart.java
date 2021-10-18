@@ -1,37 +1,37 @@
 package cart;
 
 import controllers.ItemManager;
-import models.Item;
+import interfaces.ReceiptScreen;
 import models.ItemOrder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CheckoutCart {
 
-    private final HashMap<Integer, Item> itemMap = new ItemManager().getItems();
-    public ArrayList<ItemOrder> cart = new ArrayList<>(200);
+    public static ArrayList<ItemOrder> cart = new ArrayList<>(200);
 
-    public void add(int id, int quantity) {
-        if (itemMap.containsKey(id)) {
-            String description = itemMap.get(id).getDescription();
-            double price = itemMap.get(id).getPrice();
+    public static ArrayList<ItemOrder> getCart() {
+        return cart;
+    }
+
+    public static void add(int id, int quantity) {
+        if (ItemManager.getItems().containsKey(id)) {
+            String description = ItemManager.getItems().get(id).getDescription();
+            double price = ItemManager.getItems().get(id).getPrice() * quantity;
             ItemOrder itemOrder = new ItemOrder(description, quantity, price);
 
             cart.add(itemOrder);
         }
     }
 
-    public void clear() {
+    public static void clear() {
         cart.clear();
     }
 
-    public ArrayList<ItemOrder> getCart() {
-        return cart;
-    }
-
-    public void checkOut() {
-        //TODO
-        cart.clear();
+    public static void checkOut() {
+        if (!cart.isEmpty()) {
+            new ReceiptScreen(cart);
+            cart.clear();
+        }
     }
 }

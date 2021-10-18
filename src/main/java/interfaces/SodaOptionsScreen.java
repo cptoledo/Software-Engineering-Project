@@ -1,14 +1,10 @@
 package interfaces;
 
-import controllers.ItemManager;
-import models.Item;
-import org.iq80.snappy.Main;
+import cart.CheckoutCart;
 
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.HashMap;
 
 public class SodaOptionsScreen extends JPanel {
 
@@ -85,7 +81,7 @@ public class SodaOptionsScreen extends JPanel {
                 label.setText("Must select soda");
             } else {
                 MainScreen.totalSodas += quantity;
-                MainScreen.cart.add(itemId, quantity);
+                CheckoutCart.add(itemId, quantity);
 
                 // Reset all values
                 itemId = -1;

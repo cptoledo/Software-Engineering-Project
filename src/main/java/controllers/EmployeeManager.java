@@ -3,23 +3,13 @@ package controllers;
 import models.Employee;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class EmployeeManager {
 
-    private HashMap<String, Employee> employeeMap;
-    private List<String> ids;
-
-    public EmployeeManager() {
-        this.employeeMap = getEmployees();
-    }
-
-    public HashMap<String, Employee> getEmployees() {
+    public static HashMap<String, Employee> getEmployees() {
         HashMap<String, Employee> employeeMap = new HashMap<>();
-        List<String> ids = new ArrayList<>();
 
         File file = new File("src/main/resources/employeedata.txt");
 
@@ -32,19 +22,17 @@ public class EmployeeManager {
 
                 Employee employee = new Employee();
                 employee.setId(dataSplit[0]);
-                employee.setName(dataSplit[1]);
+                employee.setFirstName(dataSplit[1]);
+                employee.setLastName(dataSplit[2]);
 
                 employeeMap.put(employee.getId(), employee);
-                ids.add(employee.getId());
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        this.employeeMap = employeeMap;
-        this.ids = ids;
 
-        return this.employeeMap;
+        return employeeMap;
     }
 
     // TODO: Set max employees to 20.
@@ -52,13 +40,14 @@ public class EmployeeManager {
 
     /**
      * Method to add an employee to the system.
-     * @param name  An employee name.
-     * @param id    An employee PIN/ID.
+     * @param id        An employee PIN/ID.
+     * @param firstName A first name.
+     * @param lastName  A last name.
      */
-    public void addEmployee(String name, String id) {
+    public static void addEmployee(String id, String firstName, String lastName) {
         boolean duplicate = true;
         while (duplicate) {
-            for (String searchId : this.ids) {
+            for (String searchId : getEmployees().keySet()) {
                 if (id.equals(searchId)) {
                     // TODO: Reprompt user to enter another PIN.
                     //id = String.format("%04d", (int) (Math.random() * 9999));
@@ -67,8 +56,7 @@ public class EmployeeManager {
                 }
             }
         }
-        String newEmployee = "\n" + id + "," + name;
-        Employee employee = new Employee(id, name);
+        String newEmployee = "\n" + id + "," + lastName + "," + firstName;
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/employeedata.txt", true));
@@ -77,8 +65,6 @@ public class EmployeeManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        employeeMap.put(id, employee);
-        ids.add(id);
     }
 
     //TODO if employee id does not exist
@@ -87,7 +73,7 @@ public class EmployeeManager {
      * Method to remove an employee from the system.
      * @param id A search PIN/ID.
      */
-    public void removeEmployee(String id) {
+    public static void removeEmployee(String id) {
         String tempFile = "src/main/resources/tempemployeedata.txt";
         File oldFile = new File("src/main/resources/employeedata.txt");
         File newFile = new File(tempFile);
@@ -96,33 +82,30 @@ public class EmployeeManager {
             Scanner scanner = new Scanner(oldFile);
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
 
-            int numRecords = 0;
+            int numRecords = getEmployees().size();
             boolean match = false;
-            while (scanner.hasNext()) {
-                String data = scanner.nextLine();
-                String[] dataSplit = data.split(",");
-
-                if (!id.equals(dataSplit[0])) {
-                    writer.append(data).append("\n");
-                    match = true;
-                }
-                numRecords++;
-            }
-            scanner.close();
-            writer.close();
-
             if (numRecords > 1) {
+                while (scanner.hasNext()) {
+                    String data = scanner.nextLine();
+                    String[] dataSplit = data.split(",");
+
+                    if (!id.equals(dataSplit[0])) {
+                        writer.append(data).append("\n");
+                    } else {
+                        match = true;
+                    }
+                }
+                scanner.close();
+                writer.close();
+
                 if (match) {
                     oldFile.delete();
                     File dump = new File("src/main/resources/employeedata.txt");
                     newFile.renameTo(dump);
-
-                    this.employeeMap = getEmployees();
                 } else {
-                    //TODO if employee id does not exist.
+                    newFile.delete();
+                    //TODO: Show that employee does not exist.
                 }
-            } else {
-                newFile.delete();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -134,7 +117,7 @@ public class EmployeeManager {
      * @param id        A search PIN/ID.
      * @param newName   A name.
      */
-    public void changeName(String id, String newName) {
+    public static void changeName(String id, String newName) {
         String tempFile = "src/main/resources/tempemployeedata.txt";
         File oldFile = new File("src/main/resources/employeedata.txt");
         File newFile = new File(tempFile);
@@ -162,8 +145,6 @@ public class EmployeeManager {
                 oldFile.delete();
                 File dump = new File("src/main/resources/employeedata.txt");
                 newFile.renameTo(dump);
-
-                this.employeeMap = getEmployees();
             } else {
                 newFile.delete();
             }
@@ -177,7 +158,7 @@ public class EmployeeManager {
      * @param id    A search PIN/ID.
      * @param newId A PIN/ID.
      */
-    public void changeId(String id, String newId) {
+    public static void changeId(String id, String newId) {
         String tempFile = "src/main/resources/tempemployeedata.txt";
         File oldFile = new File("src/main/resources/employeedata.txt");
         File newFile = new File(tempFile);
@@ -205,8 +186,6 @@ public class EmployeeManager {
                 oldFile.delete();
                 File dump = new File("src/main/resources/employeedata.txt");
                 newFile.renameTo(dump);
-
-                this.employeeMap = getEmployees();
             } else {
                 newFile.delete();
             }

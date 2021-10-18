@@ -8,9 +8,7 @@ import java.util.Scanner;
 
 public class ItemManager {
 
-    private HashMap<Integer, Item> itemMap;
-
-    public HashMap<Integer, Item> getItems() {
+    public static HashMap<Integer, Item> getItems() {
         HashMap<Integer, Item> itemMap = new HashMap<>();
 
         File file = new File("src/main/resources/itemdata.txt");
@@ -32,9 +30,8 @@ public class ItemManager {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        this.itemMap = itemMap;
 
-        return this.itemMap;
+        return itemMap;
     }
 
     /**
@@ -42,7 +39,7 @@ public class ItemManager {
      * @param id    An item ID.
      * @param price A price.
      */
-    public void setPrice(int id, double price) {
+    public static void setPrice(int id, double price) {
         String tempFile = "src/main/resources/tempitemdata.txt";
         File oldFile = new File("src/main/resources/itemdata.txt");
         File newFile = new File(tempFile);
@@ -69,8 +66,6 @@ public class ItemManager {
                     oldFile.delete();
                     File dump = new File("src/main/resources/itemdata.txt");
                     newFile.renameTo(dump);
-
-                    this.itemMap = getItems();
                 } else {
                     newFile.delete();
                 }

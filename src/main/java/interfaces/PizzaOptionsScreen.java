@@ -1,15 +1,10 @@
 package interfaces;
 
-import controllers.ItemManager;
-import models.Item;
+import cart.CheckoutCart;
 
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 
 public class PizzaOptionsScreen extends JPanel {
 
@@ -42,7 +37,6 @@ public class PizzaOptionsScreen extends JPanel {
 
     private int quantity = 0;
 
-    // TODO: Work on checkout mechanic.
     public PizzaOptionsScreen() {
         add(mainPanel);
         setVisible(true);
@@ -146,7 +140,7 @@ public class PizzaOptionsScreen extends JPanel {
             } else {
                 itemId = (pizzaSize * 10) + (topping + 1);
                 MainScreen.totalPizzas += quantity;
-                MainScreen.cart.add(itemId, quantity);
+                CheckoutCart.add(itemId, quantity);
 
                 // Reset all values
                 pizzaSize = -1;

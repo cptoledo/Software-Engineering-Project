@@ -2,12 +2,21 @@ package interfaces;
 
 import javax.swing.*;
 
-public class AccountsOptionsScreen {
+public class AccountsOptionsScreen extends JPanel {
+
+    private JPanel mainPanel;
+
     private JButton addUserButton;
     private JButton deleteUserButton;
-    private JList accountsList;
     private JButton changePINButton;
-    private JButton backButton;
-    private JPanel mainPanel;
     private JButton changeNameButton;
+    private JButton backButton;
+
+    private JList accountsList;
+
+    public AccountsOptionsScreen() {
+        add(mainPanel);
+        setVisible(true);
+
+    }
 }

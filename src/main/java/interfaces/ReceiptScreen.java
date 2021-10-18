@@ -1,39 +1,74 @@
 package interfaces;
 
 import cart.CheckoutCart;
+import controllers.ItemManager;
+import models.ItemOrder;
 import util.TimeUtils;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class ReceiptScreen extends JFrame {
 
     private JPanel mainPanel;
 
-    private JLabel shopInfoLabel;
+    private JLabel shopInfo;
 
-    private JLabel cashierLabel;
-    private JLabel timeLabel;
-    private JLabel dateLabel;
-    private JLabel customerLabel;
+    private JLabel cashier;
+    private JLabel time;
+    private JLabel date;
+    private JLabel customer;
 
-    private JLabel orderLabel;
-    private JLabel pricesLabel;
+    private JLabel orders;
+    private JLabel prices;
 
+    private JLabel totals;
     private JLabel totalsLabel;
 
-    // TODO: Get cart items into receipt.
-    // TODO: Get cart prices into receipt.
-    public ReceiptScreen(CheckoutCart cart) {
+    private String ordersString;
+    private String pricesString;
+
+    private double subtotal = 0;
+    private double totalTax;
+    private double total;
+
+    // TODO: Print cashier and customer name.
+    public ReceiptScreen(ArrayList<ItemOrder> cart) {
         setContentPane(mainPanel);
         setSize(500, 500);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
-        dateLabel.setText(TimeUtils.getTimeString("MM/d/yyyy"));
-        timeLabel.setText(TimeUtils.getTimeString("h:mm:ss a"));
+        date.setText("Date: " + TimeUtils.getTimeString("MM/d/yyyy"));
+        time.setText("Time: " + TimeUtils.getTimeString("h:mm:ss a"));
 
-        orderLabel.setText("");
-        pricesLabel.setText("");
+        ordersString = "<html>";
+        pricesString = "<html>";
+        for (ItemOrder itemOrder : cart) {
+            ordersString += itemOrder.getNumItems() + " " + itemOrder.getDescription() + "<br/>";
+            pricesString += itemOrder.getPrice() + "<br/>";
+            subtotal += itemOrder.getPrice();
+        }
+        ordersString += "</html>";
+        pricesString += "</html>";
 
-        totalsLabel.setText("");
+        orders.setText(ordersString);
+        prices.setText(pricesString);
+
+        totalsLabel.setText(
+                "<html>Sub-total:<br/>" +
+                "Total Tax:<br/>" +
+                "Total:</html>");
+
+        totalTax = subtotal * ItemManager.getItems().get(0).getPrice();
+        total = subtotal + totalTax;
+
+        String totalTaxString = String.format("%.2f", totalTax);
+        String totalString = String.format("%.2f", total);
+
+        totals.setText(
+                "<html>" + subtotal + "<br/>" +
+                totalTaxString + "<br/>" +
+                totalString + "</html>");
     }
 }

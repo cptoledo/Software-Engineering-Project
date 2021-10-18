@@ -20,7 +20,11 @@
           </grid>
         </constraints>
         <properties>
-          <model/>
+          <model>
+            <item value="Asd"/>
+            <item value="sd"/>
+          </model>
+          <name value=""/>
         </properties>
       </component>
       <component id="a8fe9" class="javax.swing.JButton" binding="addUserButton" default-binding="true">

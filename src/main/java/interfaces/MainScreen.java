@@ -28,14 +28,11 @@ public class MainScreen extends JFrame {
 
     private JPanel settingsPanel;
 
-    public static CheckoutCart cart;
-
     public static int totalSodas;
     public static int totalPizzas;
 
     public static Employee currentEmployee;
 
-    //TODO: Properly add items to cart.
     //TODO: Update checkout list whenever an item is added to the cart.
     public MainScreen(Employee employee) {
         setContentPane(mainPanel);
@@ -45,36 +42,41 @@ public class MainScreen extends JFrame {
 
         currentEmployee = employee;
 
-        cart = new CheckoutCart();
-
         orderSelectionPanel.setLayout(new GridLayout());
 
+        // Order listeners
         pizzaButton.addActionListener(e -> {
             clearPanel(orderSelectionPanel);
             orderSelectionPanel.add(new PizzaOptionsScreen());
             refreshPanel(orderSelectionPanel);
         });
-
         sodaButton.addActionListener(e -> {
             clearPanel(orderSelectionPanel);
             orderSelectionPanel.add(new SodaOptionsScreen());
             refreshPanel(orderSelectionPanel);
         });
-
         clearCartButton.addActionListener(e -> {
-            cart.clear();
+            CheckoutCart.clear();
             totalPizzas = 0;
             totalSodas = 0;
         });
-
         checkoutButton.addActionListener(e -> {
-            cart.checkOut();
+            CheckoutCart.checkOut();
             totalPizzas = 0;
             totalSodas = 0;
-
-            new ReceiptScreen(cart);
         });
 
+        // Setting listeners
+        accountsButton.addActionListener(e -> {
+            clearPanel(settingsPanel);
+            settingsPanel.add(new AccountsOptionsScreen());
+            refreshPanel(settingsPanel);
+        });
+        shopButton.addActionListener(e -> {
+            clearPanel(settingsPanel);
+            settingsPanel.add(new ShopOptionsScreen());
+            refreshPanel(settingsPanel);
+        });
         logoutButton.addActionListener(e -> {
             new LoginScreen();
             dispose();

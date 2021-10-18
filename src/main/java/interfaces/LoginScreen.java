@@ -1,14 +1,11 @@
 package interfaces;
 
 import controllers.EmployeeManager;
-import models.Employee;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.HashMap;
 
 public class LoginScreen extends JFrame {
 
@@ -18,8 +15,7 @@ public class LoginScreen extends JFrame {
     private JPanel mainPanel;
     private JLabel confirmLabel;
 
-    HashMap<String, Employee> employeeMap = new EmployeeManager().getEmployees();
-
+    // TODO: Get employee who is logged in.
     public LoginScreen() {
         add(mainPanel);
         setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
@@ -48,8 +44,8 @@ public class LoginScreen extends JFrame {
 
                 // Check if PIN is registered in the system.
                 if (pinField.getText().length() >= 4) {
-                    if (employeeMap.containsKey(value)) {
-                        new MainScreen(employeeMap.get(value));
+                    if (EmployeeManager.getEmployees().containsKey(value)) {
+                        new MainScreen(EmployeeManager.getEmployees().get(value));
                         dispose();
                     } else {
                         pinField.setText("");
