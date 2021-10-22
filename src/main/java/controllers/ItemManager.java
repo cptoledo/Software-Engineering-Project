@@ -53,23 +53,25 @@ public class ItemManager {
                 String data = scanner.nextLine();
                 String[] dataSplit = data.split(",");
 
-                if (!(id == Integer.parseInt(dataSplit[0]))) {
+                if (id != Integer.parseInt(dataSplit[0])) {
                     writer.append(data).append("\n");
                 } else {
                     writer.append(dataSplit[0]).append(",").append(dataSplit[1]).append(",").append(String.valueOf(price)).append("\n");
                     match = true;
                 }
-                scanner.close();
-                writer.close();
-
-                if (match) {
-                    oldFile.delete();
-                    File dump = new File("src/main/resources/itemdata.txt");
-                    newFile.renameTo(dump);
-                } else {
-                    newFile.delete();
-                }
             }
+            scanner.close();
+            writer.close();
+
+            if (match) {
+                oldFile.delete();
+                File dump = new File("src/main/resources/itemdata.txt");
+                newFile.renameTo(dump);
+            } else {
+                newFile.delete();
+            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

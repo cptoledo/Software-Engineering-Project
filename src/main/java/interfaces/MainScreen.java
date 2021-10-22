@@ -13,7 +13,7 @@ public class MainScreen extends JFrame {
 
     private JPanel optionsPanel;
     private JButton accountsButton;
-    private JButton shopButton;
+    private JButton pricesButton;
     private JButton logoutButton;
 
     private JPanel orderPanel;
@@ -43,17 +43,14 @@ public class MainScreen extends JFrame {
         currentEmployee = employee;
 
         orderSelectionPanel.setLayout(new GridLayout());
+        settingsPanel.setLayout(new GridLayout());
 
         // Order listeners
         pizzaButton.addActionListener(e -> {
-            clearPanel(orderSelectionPanel);
-            orderSelectionPanel.add(new PizzaOptionsScreen());
-            refreshPanel(orderSelectionPanel);
+            setPanel(orderSelectionPanel, new PizzaOptionsScreen());
         });
         sodaButton.addActionListener(e -> {
-            clearPanel(orderSelectionPanel);
-            orderSelectionPanel.add(new SodaOptionsScreen());
-            refreshPanel(orderSelectionPanel);
+            setPanel(orderSelectionPanel, new SodaOptionsScreen());
         });
         clearCartButton.addActionListener(e -> {
             CheckoutCart.clear();
@@ -68,14 +65,10 @@ public class MainScreen extends JFrame {
 
         // Setting listeners
         accountsButton.addActionListener(e -> {
-            clearPanel(settingsPanel);
-            settingsPanel.add(new AccountsOptionsScreen());
-            refreshPanel(settingsPanel);
+            setPanel(settingsPanel, new ConfigureAccountsScreen());
         });
-        shopButton.addActionListener(e -> {
-            clearPanel(settingsPanel);
-            settingsPanel.add(new ShopOptionsScreen());
-            refreshPanel(settingsPanel);
+        pricesButton.addActionListener(e -> {
+            setPanel(settingsPanel, new ConfigurePricesScreen());
         });
         logoutButton.addActionListener(e -> {
             new LoginScreen();
@@ -83,16 +76,22 @@ public class MainScreen extends JFrame {
         });
     }
 
+    private void setPanel(JPanel panel, JPanel newPanel) {
+        clearPanel(panel);
+        panel.add(newPanel);
+        refreshPanel(panel);
+    }
+
     private void clearPanel(JPanel panel) {
         panel.removeAll();
     }
 
-    public static void refreshPanel(JPanel panel) {
+    private  void refreshPanel(JPanel panel) {
         panel.revalidate();
         panel.repaint();
     }
 
-    public void refreshCart() {
+    private void refreshCart() {
         checkoutPanel.revalidate();
         checkoutPanel.repaint();
     }

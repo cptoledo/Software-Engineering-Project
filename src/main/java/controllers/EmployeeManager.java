@@ -22,8 +22,8 @@ public class EmployeeManager {
 
                 Employee employee = new Employee();
                 employee.setId(dataSplit[0]);
-                employee.setFirstName(dataSplit[1]);
-                employee.setLastName(dataSplit[2]);
+                employee.setLastName(dataSplit[1]);
+                employee.setFirstName(dataSplit[2]);
 
                 employeeMap.put(employee.getId(), employee);
             }
@@ -35,9 +35,6 @@ public class EmployeeManager {
         return employeeMap;
     }
 
-    // TODO: Set max employees to 20.
-    // TODO: PIN should be created by user, not randomly generated.
-
     /**
      * Method to add an employee to the system.
      * @param id        An employee PIN/ID.
@@ -45,29 +42,35 @@ public class EmployeeManager {
      * @param lastName  A last name.
      */
     public static void addEmployee(String id, String firstName, String lastName) {
-        boolean duplicate = true;
-        while (duplicate) {
-            for (String searchId : getEmployees().keySet()) {
-                if (id.equals(searchId)) {
-                    // TODO: Reprompt user to enter another PIN.
-                    //id = String.format("%04d", (int) (Math.random() * 9999));
-                } else {
-                    duplicate = false;
+        String newEmployee = null;
+        boolean duplicate = false;
+
+        // Check if max employee count has been reached.
+        if (getEmployees().size() < 20) {
+            while (!duplicate) {
+                for (String searchId : getEmployees().keySet()) {
+                    if (id.equals(searchId)) {
+                        // TODO: Reprompt user to enter another PIN.
+                        newEmployee = null;
+                        duplicate = true;
+                    } else {
+                        newEmployee = "\n" + id + "," + lastName + "," + firstName;
+                    }
                 }
             }
         }
-        String newEmployee = "\n" + id + "," + lastName + "," + firstName;
 
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/employeedata.txt", true));
-            writer.append(newEmployee);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Add new employee to data list.
+        if (newEmployee != null) {
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/employeedata.txt", true));
+                writer.append(newEmployee);
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-
-    //TODO if employee id does not exist
 
     /**
      * Method to remove an employee from the system.
@@ -112,6 +115,7 @@ public class EmployeeManager {
         }
     }
 
+    //TODO: FIX FOR LASTNAME, FIRSTNAME
     /**
      * Method to change an employee's name.
      * @param id        A search PIN/ID.
