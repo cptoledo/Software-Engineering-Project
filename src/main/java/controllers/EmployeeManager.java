@@ -50,7 +50,6 @@ public class EmployeeManager {
             while (!duplicate) {
                 for (String searchId : getEmployees().keySet()) {
                     if (id.equals(searchId)) {
-                        // TODO: Reprompt user to enter another PIN.
                         newEmployee = null;
                         duplicate = true;
                     } else {
@@ -107,7 +106,6 @@ public class EmployeeManager {
                     newFile.renameTo(dump);
                 } else {
                     newFile.delete();
-                    //TODO: Show that employee does not exist.
                 }
             }
         } catch (IOException e) {
@@ -115,13 +113,13 @@ public class EmployeeManager {
         }
     }
 
-    //TODO: FIX FOR LASTNAME, FIRSTNAME
     /**
      * Method to change an employee's name.
      * @param id        A search PIN/ID.
-     * @param newName   A name.
+     * @param firstName A first name.
+     * @param lastName  A last name.
      */
-    public static void changeName(String id, String newName) {
+    public static void changeName(String id, String firstName, String lastName) {
         String tempFile = "src/main/resources/tempemployeedata.txt";
         File oldFile = new File("src/main/resources/employeedata.txt");
         File newFile = new File(tempFile);
@@ -136,7 +134,7 @@ public class EmployeeManager {
                 String[] dataSplit = data.split(",");
 
                 if (id.equals(dataSplit[0])) {
-                    writer.append(dataSplit[0]).append(",").append(newName).append("\n");
+                    writer.append(dataSplit[0]).append(",").append(lastName).append(",").append(firstName).append("\n");
                     match = true;
                 } else {
                     writer.append(data);

@@ -15,16 +15,7 @@
           </grid>
         </constraints>
         <properties>
-          <model>
-            <item value="SMALL NO TOPPING PIZZA"/>
-            <item value="SMALL TOPPING PIZZA"/>
-            <item value="MEDIUM NO TOPPING PIZZA"/>
-            <item value="MEDIUM TOPPING PIZZA"/>
-            <item value="LARGE NO TOPPING PIZZA"/>
-            <item value="LARGE TOPPING PIZZA"/>
-            <item value="SODAS"/>
-            <item value="TAX PERCENTAGE"/>
-          </model>
+          <model/>
         </properties>
       </component>
       <component id="64a06" class="javax.swing.JTextField" binding="priceField">
