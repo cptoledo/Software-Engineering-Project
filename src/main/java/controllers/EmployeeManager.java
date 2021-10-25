@@ -1,5 +1,6 @@
 package controllers;
 
+import interfaces.MainScreen;
 import models.Employee;
 
 import java.io.*;
@@ -86,7 +87,7 @@ public class EmployeeManager {
 
             int numRecords = getEmployees().size();
             boolean match = false;
-            if (numRecords > 1) {
+            if (numRecords > 1 && !id.equals(MainScreen.currentEmployee.getId())) {
                 while (scanner.hasNext()) {
                     String data = scanner.nextLine();
                     String[] dataSplit = data.split(",");
