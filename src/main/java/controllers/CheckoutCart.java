@@ -1,6 +1,5 @@
-package cart;
+package controllers;
 
-import controllers.ItemManager;
 import interfaces.ReceiptScreen;
 import models.ItemOrder;
 

@@ -52,7 +52,7 @@
           </grid>
         </constraints>
         <properties>
-          <enabled value="false"/>
+          <enabled value="true"/>
         </properties>
       </component>
       <component id="f5c2a" class="javax.swing.JTextField" binding="firstNameField">
@@ -62,7 +62,7 @@
           </grid>
         </constraints>
         <properties>
-          <enabled value="false"/>
+          <enabled value="true"/>
         </properties>
       </component>
       <component id="7777" class="javax.swing.JTextField" binding="pinField">
@@ -72,7 +72,7 @@
           </grid>
         </constraints>
         <properties>
-          <enabled value="false"/>
+          <enabled value="true"/>
         </properties>
       </component>
       <component id="934b6" class="javax.swing.JLabel">
@@ -117,7 +117,7 @@
           <text value="Change PIN"/>
         </properties>
       </component>
-      <component id="45d1d" class="javax.swing.JLabel" binding="firstNameLabel">
+      <component id="45d1d" class="javax.swing.JLabel" binding="label">
         <constraints>
           <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

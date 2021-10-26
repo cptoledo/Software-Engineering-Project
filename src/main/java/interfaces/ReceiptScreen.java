@@ -1,6 +1,5 @@
 package interfaces;
 
-import cart.CheckoutCart;
 import controllers.ItemManager;
 import models.ItemOrder;
 import util.TimeUtils;

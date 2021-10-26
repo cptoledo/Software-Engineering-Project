@@ -43,31 +43,20 @@ public class EmployeeManager {
      * @param lastName  A last name.
      */
     public static void addEmployee(String id, String firstName, String lastName) {
-        String newEmployee = null;
-        boolean duplicate = false;
+        String newEmployee;
 
         // Check if max employee count has been reached.
         if (getEmployees().size() < 20) {
-            while (!duplicate) {
-                for (String searchId : getEmployees().keySet()) {
-                    if (id.equals(searchId)) {
-                        newEmployee = null;
-                        duplicate = true;
-                    } else {
-                        newEmployee = "\n" + id + "," + lastName + "," + firstName;
-                    }
-                }
-            }
-        }
+            if (!getEmployees().containsKey(id)) {
+                newEmployee = id + "," + lastName + "," + firstName + "\n";
 
-        // Add new employee to data list.
-        if (newEmployee != null) {
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/employeedata.txt", true));
-                writer.append(newEmployee);
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/employeedata.txt", true));
+                    writer.append(newEmployee);
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -138,7 +127,7 @@ public class EmployeeManager {
                     writer.append(dataSplit[0]).append(",").append(lastName).append(",").append(firstName).append("\n");
                     match = true;
                 } else {
-                    writer.append(data);
+                    writer.append(data).append("\n");
                 }
             }
             scanner.close();
@@ -176,10 +165,10 @@ public class EmployeeManager {
                 String[] dataSplit = data.split(",");
 
                 if (id.equals(dataSplit[0])) {
-                    writer.append(newId).append(",").append(dataSplit[1]).append("\n");
+                    writer.append(newId).append(",").append(dataSplit[1]).append(",").append(dataSplit[2]).append("\n");
                     match = true;
                 } else {
-                    writer.append(data);
+                    writer.append(data).append("\n");
                 }
             }
             scanner.close();

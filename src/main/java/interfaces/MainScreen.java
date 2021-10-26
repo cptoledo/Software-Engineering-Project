@@ -1,9 +1,11 @@
 package interfaces;
 
-import cart.CheckoutCart;
+import controllers.CheckoutCart;
 import models.Employee;
+import models.ItemOrder;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class MainScreen extends JFrame {
@@ -27,6 +29,8 @@ public class MainScreen extends JFrame {
     private JButton clearCartButton;
 
     private JPanel settingsPanel;
+
+    private DefaultTableModel tableModel;
 
     public static int totalSodas;
     public static int totalPizzas;
@@ -77,22 +81,24 @@ public class MainScreen extends JFrame {
     }
 
     private void setPanel(JPanel panel, JPanel newPanel) {
-        clearPanel(panel);
+        panel.removeAll();
         panel.add(newPanel);
         refreshPanel(panel);
     }
 
-    private void clearPanel(JPanel panel) {
-        panel.removeAll();
-    }
-
-    private  void refreshPanel(JPanel panel) {
+    private void refreshPanel(JPanel panel) {
         panel.revalidate();
         panel.repaint();
     }
 
-    private void refreshCart() {
-        checkoutPanel.revalidate();
-        checkoutPanel.repaint();
+    private void updateCart() {
+        tableModel = new DefaultTableModel();
+
+        for (ItemOrder itemOrder : CheckoutCart.getCart()) {
+            // TODO: Add new rows to JTable
+        }
+        checkoutList.setModel(tableModel);
+
+        refreshPanel(checkoutPanel);
     }
 }

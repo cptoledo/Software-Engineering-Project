@@ -1,6 +1,6 @@
 package interfaces;
 
-import cart.CheckoutCart;
+import controllers.CheckoutCart;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;

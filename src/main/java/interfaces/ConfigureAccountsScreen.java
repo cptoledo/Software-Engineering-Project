@@ -20,7 +20,7 @@ public class ConfigureAccountsScreen extends JPanel {
     private JTextField lastNameField;
     private JTextField firstNameField;
     private JTextField pinField;
-    private JLabel firstNameLabel;
+    private JLabel label;
     private JButton confirmButton;
     private JButton changePinButton;
 
@@ -35,6 +35,7 @@ public class ConfigureAccountsScreen extends JPanel {
         setVisible(true);
 
         updateAccountList();
+        disableFields();
 
         accountsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         accountsList.addListSelectionListener(e -> {
@@ -57,14 +58,14 @@ public class ConfigureAccountsScreen extends JPanel {
         changeNameButton.addActionListener(e -> {
             disableFields();
             buttonPressed = 2;
-            lastNameField.setEnabled(true);
-            firstNameField.setEnabled(true);
+            lastNameField.setEditable(true);
+            firstNameField.setEditable(true);
             confirmButton.setEnabled(true);
         });
         changePinButton.addActionListener(e -> {
             disableFields();
             buttonPressed = 3;
-            pinField.setEnabled(true);
+            pinField.setEditable(true);
             confirmButton.setEnabled(true);
         });
 
@@ -118,9 +119,7 @@ public class ConfigureAccountsScreen extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if (pinField.getText().length() == 4) {
-                    pinField.setEditable(false);
-                }
+
             }
         });
 
@@ -128,32 +127,38 @@ public class ConfigureAccountsScreen extends JPanel {
             if (buttonPressed == 1) {
                 // Add user
                 if (lastNameField.getText().length() == 0) {
-                    firstNameLabel.setText("Enter a last name");
+                    label.setText("Enter a last name");
                 } else if (firstNameField.getText().length() == 0) {
-                    firstNameLabel.setText("Enter a first name");
-                } else if (pinField.getText().length() == 0) {
-                    firstNameLabel.setText("Enter a PIN");
+                    label.setText("Enter a first name");
+                } else if (pinField.getText().length() == 0 || pinField.getText().length() != 4) {
+                    label.setText("Enter a 4-digit PIN");
+                } else if (EmployeeManager.getEmployees().containsKey(pinField.getText())) {
+                    label.setText("PIN is not unique");
+                    System.out.println("1:" + pinField.getText());
                 } else {
+                    System.out.println("2:" + pinField.getText());
                     EmployeeManager.addEmployee(pinField.getText(), firstNameField.getText(), lastNameField.getText());
+                    updateAccountList();
                 }
             } else if (buttonPressed == 2) {
                 // Change name
                 if (lastNameField.getText().length() == 0) {
-                    firstNameLabel.setText("Enter a last name");
+                    label.setText("Enter a last name");
                 } else if (firstNameField.getText().length() == 0) {
-                    firstNameLabel.setText("Enter a first name");
+                    label.setText("Enter a first name");
                 } else {
                     EmployeeManager.changeName(selectedUser.getId(), firstNameField.getText(), lastNameField.getText());
+                    updateAccountList();
                 }
             } else if (buttonPressed == 3) {
                 // Change PIN
                 if (pinField.getText().length() == 0 || pinField.getText().length() != 4) {
-                    firstNameLabel.setText("Enter a 4-digit PIN");
+                    label.setText("Enter a 4-digit PIN");
                 } else {
                     EmployeeManager.changeId(selectedUser.getId(), pinField.getText());
+                    updateAccountList();
                 }
             }
-            updateAccountList();
         });
     }
 
@@ -167,6 +172,9 @@ public class ConfigureAccountsScreen extends JPanel {
 
         accountsList.revalidate();
         accountsList.repaint();
+
+        clearFields();
+        disableFields();
     }
 
     private void enableAccountOptions() {
@@ -176,16 +184,16 @@ public class ConfigureAccountsScreen extends JPanel {
     }
 
     private void enableFields() {
-        lastNameField.setEnabled(true);
-        firstNameField.setEnabled(true);
-        pinField.setEnabled(true);
+        lastNameField.setEditable(true);
+        firstNameField.setEditable(true);
+        pinField.setEditable(true);
         confirmButton.setEnabled(true);
     }
 
     private void disableFields() {
-        lastNameField.setEnabled(false);
-        firstNameField.setEnabled(false);
-        pinField.setEnabled(false);
+        lastNameField.setEditable(false);
+        firstNameField.setEditable(false);
+        pinField.setEditable(false);
         confirmButton.setEnabled(false);
         clearFields();
     }
@@ -194,6 +202,6 @@ public class ConfigureAccountsScreen extends JPanel {
         lastNameField.setText("");
         firstNameField.setText("");
         pinField.setText("");
-        firstNameLabel.setText("");
+        label.setText("");
     }
 }
