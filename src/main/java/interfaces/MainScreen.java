@@ -93,7 +93,7 @@ public class MainScreen extends JFrame {
     }
 
     private void updateCart() {
-        // IF NUM ITEMS IN CART CHANGES UPDATE LIST
+        // TODO: IF NUM ITEMS IN CART CHANGES UPDATE LIST
 
         tableModel = new DefaultTableModel();
 

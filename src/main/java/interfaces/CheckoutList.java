@@ -6,6 +6,7 @@ import models.ItemOrder;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+// TODO: TEST CLASS
 public class CheckoutList extends JTable {
 
     private DefaultTableModel tableModel;
