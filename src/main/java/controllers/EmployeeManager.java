@@ -45,8 +45,9 @@ public class EmployeeManager {
     public static void addEmployee(String id, String firstName, String lastName) {
         String newEmployee;
 
-        // Check if max employee count has been reached.
+        // Check there are already 20 employees on the system.
         if (getEmployees().size() < 20) {
+            // Check if there is an already existing id in the system.
             if (!getEmployees().containsKey(id)) {
                 newEmployee = id + "," + lastName + "," + firstName + "\n";
 
@@ -76,6 +77,8 @@ public class EmployeeManager {
 
             int numRecords = getEmployees().size();
             boolean match = false;
+            // Check if there is only 1 employee left in the system.
+            // Check if employee to be deleted is the current user.
             if (numRecords > 1 && !id.equals(MainScreen.currentEmployee.getId())) {
                 while (scanner.hasNext()) {
                     String data = scanner.nextLine();

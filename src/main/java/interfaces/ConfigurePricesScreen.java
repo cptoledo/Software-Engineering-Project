@@ -1,7 +1,6 @@
 package interfaces;
 
 import controllers.ItemManager;
-import models.Item;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;

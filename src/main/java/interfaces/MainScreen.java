@@ -95,10 +95,12 @@ public class MainScreen extends JFrame {
         tableModel = new DefaultTableModel();
 
         for (ItemOrder itemOrder : CheckoutCart.getCart()) {
-            // TODO: Add new rows to JTable
+            tableModel.setValueAt(itemOrder.getDescription(), checkoutList.getSelectedRow(), 0);
+            tableModel.setValueAt(itemOrder.getNumItems(), checkoutList.getSelectedRow(), 1);
         }
         checkoutList.setModel(tableModel);
 
-        refreshPanel(checkoutPanel);
+        checkoutList.revalidate();
+        checkoutList.repaint();
     }
 }

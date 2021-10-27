@@ -14,13 +14,11 @@ public class CheckoutCart {
     }
 
     public static void add(int id, int quantity) {
-        if (ItemManager.getItems().containsKey(id)) {
-            String description = ItemManager.getItems().get(id).getDescription();
-            double price = ItemManager.getItems().get(id).getPrice() * quantity;
-            ItemOrder itemOrder = new ItemOrder(description, quantity, price);
+        String description = ItemManager.getItems().get(id).getDescription();
+        double price = ItemManager.getItems().get(id).getPrice() * quantity;
+        ItemOrder itemOrder = new ItemOrder(description, quantity, price);
 
-            cart.add(itemOrder);
-        }
+        cart.add(itemOrder);
     }
 
     public static void clear() {
