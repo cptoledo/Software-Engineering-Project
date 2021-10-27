@@ -56,6 +56,7 @@ public class MainScreen extends JFrame {
         sodaButton.addActionListener(e -> {
             setPanel(orderSelectionPanel, new SodaOptionsScreen());
         });
+
         clearCartButton.addActionListener(e -> {
             CheckoutCart.clear();
             totalPizzas = 0;
@@ -92,6 +93,8 @@ public class MainScreen extends JFrame {
     }
 
     private void updateCart() {
+        // IF NUM ITEMS IN CART CHANGES UPDATE LIST
+
         tableModel = new DefaultTableModel();
 
         for (ItemOrder itemOrder : CheckoutCart.getCart()) {
