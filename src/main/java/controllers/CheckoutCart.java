@@ -19,6 +19,7 @@ public class CheckoutCart {
         ItemOrder itemOrder = new ItemOrder(description, quantity, price);
 
         cart.add(itemOrder);
+
     }
 
     public static void clear() {
@@ -27,7 +28,7 @@ public class CheckoutCart {
 
     public static void checkOut() {
         if (!cart.isEmpty()) {
-            new ReceiptScreen(cart);
+            new ReceiptScreen();
             cart.clear();
         }
     }

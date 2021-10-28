@@ -15,7 +15,6 @@ public class LoginScreen extends JFrame {
     private JPanel mainPanel;
     private JLabel confirmLabel;
 
-    // TODO: Get employee who is logged in.
     public LoginScreen() {
         add(mainPanel);
         setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));

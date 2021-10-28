@@ -1,39 +1,61 @@
 package models;
 
-public class Receipt {
+import java.util.ArrayList;
 
+public class Transaction {
+
+    private String date;
     private String time;
     private String customer;
     private String cashier;
-    private ItemOrder[] items;
-    private double price;
-    private double salesTax;
+    private ArrayList<ItemOrder> items;
+    private double subtotal;
+    private double tax;
     private double total;
 
     /**
      * Construct a Receipt object to store information pertaining to the pizza shop order.
+     * @param date          The date the order was processed.
      * @param time          The time the order was processed.
      * @param customer      The customer name on the order.
      * @param cashier       The cashier who processed the order.
-     * @param price         The price of the order.
-     * @param salesTax      The tax of the order.
-     * @param total         The total price of the order.
+     * @param subtotal      The price (before tax) of the order.
+     * @param tax           The tax of the order.
+     * @param total         The price (after tax) of the order.
      */
-    public Receipt(
+    public Transaction(
+            String date,
             String time,
             String customer,
             String cashier,
-            ItemOrder[] items,
-            double price,
-            double salesTax,
+            ArrayList<ItemOrder> items,
+            double subtotal,
+            double tax,
             double total) {
+        this.date = date;
         this.time = time;
         this.customer = customer;
         this.cashier = cashier;
         this.items = items;
-        this.price = price;
-        this.salesTax = salesTax;
+        this.subtotal = subtotal;
+        this.tax = tax;
         this.total = total;
+    }
+
+    /**
+     * Get the date.
+     * @return The date.
+     */
+    public String getDate() {
+        return date;
+    }
+
+    /**
+     * Set the date.
+     * @param date A date.
+     */
+    public void setDate(String date) {
+        this.date = date;
     }
 
     /**
@@ -85,35 +107,35 @@ public class Receipt {
     }
 
     /**
-     * Get the array of items.
-     * @return The array of items.
+     * Get the array list of items.
+     * @return The array list of items.
      */
-    public ItemOrder[] getItems() {
+    public ArrayList<ItemOrder> getItems() {
         return items;
     }
 
     /**
-     * Set the array of items.
-     * @param items An array of items.
+     * Set the array lsit of items.
+     * @param items An array list of items.
      */
-    public void setItems(ItemOrder[] items) {
+    public void setItems(ArrayList<ItemOrder> items) {
         this.items = items;
     }
 
     /**
-     * Get the price of the order.
-     * @return The price of the order.
+     * Get the price (before tax) of the order.
+     * @return The price (before tax) of the order.
      */
     public double getPrice() {
-        return price;
+        return subtotal;
     }
 
     /**
-     * Set the price of the order.
-     * @param price A price of the order.
+     * Set the price (after tax) of the order.
+     * @param subtotal A price (after tax) of the order.
      */
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPrice(double subtotal) {
+        this.subtotal = subtotal;
     }
 
     /**
@@ -121,15 +143,15 @@ public class Receipt {
      * @return The tax of the price of the order.
      */
     public double getSalesTax() {
-        return salesTax;
+        return tax;
     }
 
     /**
      * Set the tax of the price of the order.
-     * @param salesTax A tax of the price of the order.
+     * @param tax A tax of the price of the order.
      */
-    public void setSalesTax(double salesTax) {
-        this.salesTax = salesTax;
+    public void setSalesTax(double tax) {
+        this.tax = tax;
     }
 
     /**
@@ -146,15 +168,5 @@ public class Receipt {
      */
     public void setTotal(double total) {
         this.total = total;
-    }
-
-    public String toString() {
-        return "Receipt{" +
-                "customer='" + customer + '\'' +
-                ", cashier='" + cashier + '\'' +
-                ", price=" + price +
-                ", salesTax=" + salesTax +
-                ", total=" + total +
-                '}';
     }
 }
