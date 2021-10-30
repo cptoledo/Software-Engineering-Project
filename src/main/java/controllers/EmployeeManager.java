@@ -76,7 +76,7 @@ public class EmployeeManager {
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
 
             int numRecords = getEmployees().size();
-            boolean match = false;
+
             // Check if there is only 1 employee left in the system.
             // Check if employee to be deleted is the current user.
             if (numRecords > 1 && !id.equals(MainScreen.currentEmployee.getId())) {
@@ -86,20 +86,14 @@ public class EmployeeManager {
 
                     if (!id.equals(dataSplit[0])) {
                         writer.append(data).append("\n");
-                    } else {
-                        match = true;
                     }
                 }
                 scanner.close();
                 writer.close();
 
-                if (match) {
-                    oldFile.delete();
-                    File dump = new File("src/main/resources/employeedata.txt");
-                    newFile.renameTo(dump);
-                } else {
-                    newFile.delete();
-                }
+                oldFile.delete();
+                File dump = new File("src/main/resources/employeedata.txt");
+                newFile.renameTo(dump);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -121,14 +115,12 @@ public class EmployeeManager {
             Scanner scanner = new Scanner(oldFile);
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
 
-            boolean match = false;
             while (scanner.hasNext()) {
                 String data = scanner.nextLine();
                 String[] dataSplit = data.split(",");
 
                 if (id.equals(dataSplit[0])) {
                     writer.append(dataSplit[0]).append(",").append(lastName).append(",").append(firstName).append("\n");
-                    match = true;
                 } else {
                     writer.append(data).append("\n");
                 }
@@ -136,13 +128,9 @@ public class EmployeeManager {
             scanner.close();
             writer.close();
 
-            if (match) {
-                oldFile.delete();
-                File dump = new File("src/main/resources/employeedata.txt");
-                newFile.renameTo(dump);
-            } else {
-                newFile.delete();
-            }
+            oldFile.delete();
+            File dump = new File("src/main/resources/employeedata.txt");
+            newFile.renameTo(dump);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -162,14 +150,12 @@ public class EmployeeManager {
             Scanner scanner = new Scanner(oldFile);
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
 
-            boolean match = false;
             while (scanner.hasNext()) {
                 String data = scanner.nextLine();
                 String[] dataSplit = data.split(",");
 
                 if (id.equals(dataSplit[0])) {
                     writer.append(newId).append(",").append(dataSplit[1]).append(",").append(dataSplit[2]).append("\n");
-                    match = true;
                 } else {
                     writer.append(data).append("\n");
                 }
@@ -177,15 +163,12 @@ public class EmployeeManager {
             scanner.close();
             writer.close();
 
-            if (match) {
-                oldFile.delete();
-                File dump = new File("src/main/resources/employeedata.txt");
-                newFile.renameTo(dump);
-            } else {
-                newFile.delete();
-            }
+            oldFile.delete();
+            File dump = new File("src/main/resources/employeedata.txt");
+            newFile.renameTo(dump);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }

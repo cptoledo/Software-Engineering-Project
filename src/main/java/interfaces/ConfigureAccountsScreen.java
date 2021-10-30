@@ -139,6 +139,7 @@ public class ConfigureAccountsScreen extends JPanel {
                     System.out.println("2:" + pinField.getText());
                     EmployeeManager.addEmployee(pinField.getText(), firstNameField.getText(), lastNameField.getText());
                     updateAccountList();
+                    accountsList.setSelectedIndex(-1);
                 }
             } else if (buttonPressed == 2) {
                 // Change name
@@ -149,6 +150,7 @@ public class ConfigureAccountsScreen extends JPanel {
                 } else {
                     EmployeeManager.changeName(selectedUser.getId(), firstNameField.getText(), lastNameField.getText());
                     updateAccountList();
+                    accountsList.setSelectedIndex(-1);
                 }
             } else if (buttonPressed == 3) {
                 // Change PIN
@@ -157,6 +159,7 @@ public class ConfigureAccountsScreen extends JPanel {
                 } else {
                     EmployeeManager.changeId(selectedUser.getId(), pinField.getText());
                     updateAccountList();
+                    accountsList.setSelectedIndex(-1);
                 }
             }
         });
