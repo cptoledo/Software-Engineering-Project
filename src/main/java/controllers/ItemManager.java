@@ -40,38 +40,29 @@ public class ItemManager {
      * @param price A price.
      */
     public static void setPrice(int id, double price) {
-        String tempFile = "src/main/resources/tempitemdata.txt";
-        File oldFile = new File("src/main/resources/itemdata.txt");
-        File newFile = new File(tempFile);
+        File file = new File("src/main/resources/itemdata.txt");
+        HashMap<Integer, Item> itemMap = getItems();
 
         try {
-            Scanner scanner = new Scanner(oldFile);
-            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
+            // Clear old data in text file.
+            PrintWriter pw = new PrintWriter(file);
+            pw.write("");
+            pw.close();
 
-            boolean match = false;
-            while (scanner.hasNext()) {
-                String data = scanner.nextLine();
-                String[] dataSplit = data.split(",");
+            // Writer new data in text file.
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
 
-                if (id != Integer.parseInt(dataSplit[0])) {
+            for (Item item : itemMap.values()) {
+                String data = item.getId() + "," + item.getDescription() + "," + item.getPrice();
+                String itemId = item.getId() + "";
+                String newPrice = price + "";
+                if (id != item.getId()) {
                     writer.append(data).append("\n");
                 } else {
-                    writer.append(dataSplit[0]).append(",").append(dataSplit[1]).append(",").append(String.valueOf(price)).append("\n");
-                    match = true;
+                    writer.append(itemId).append(",").append(item.getDescription()).append(",").append(newPrice).append("\n");
                 }
             }
-            scanner.close();
             writer.close();
-
-            if (match) {
-                oldFile.delete();
-                File dump = new File("src/main/resources/itemdata.txt");
-                newFile.renameTo(dump);
-            } else {
-                newFile.delete();
-            }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }

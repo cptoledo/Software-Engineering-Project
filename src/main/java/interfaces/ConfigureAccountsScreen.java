@@ -123,6 +123,7 @@ public class ConfigureAccountsScreen extends JPanel {
             }
         });
 
+        // TODO: Disable account options when confirm is processed.
         confirmButton.addActionListener(e -> {
             if (buttonPressed == 1) {
                 // Add user
@@ -139,6 +140,8 @@ public class ConfigureAccountsScreen extends JPanel {
                     System.out.println("2:" + pinField.getText());
                     EmployeeManager.addEmployee(pinField.getText(), firstNameField.getText(), lastNameField.getText());
                     updateAccountList();
+                    accountsList.setSelectedIndex(-1);
+                    disableAccountOptions();
                 }
             } else if (buttonPressed == 2) {
                 // Change name
@@ -149,6 +152,8 @@ public class ConfigureAccountsScreen extends JPanel {
                 } else {
                     EmployeeManager.changeName(selectedUser.getId(), firstNameField.getText(), lastNameField.getText());
                     updateAccountList();
+                    accountsList.setSelectedIndex(-1);
+                    disableAccountOptions();
                 }
             } else if (buttonPressed == 3) {
                 // Change PIN
@@ -157,6 +162,8 @@ public class ConfigureAccountsScreen extends JPanel {
                 } else {
                     EmployeeManager.changeId(selectedUser.getId(), pinField.getText());
                     updateAccountList();
+                    accountsList.setSelectedIndex(-1);
+                    disableAccountOptions();
                 }
             }
         });
@@ -181,6 +188,12 @@ public class ConfigureAccountsScreen extends JPanel {
         deleteUserButton.setEnabled(true);
         changeNameButton.setEnabled(true);
         changePinButton.setEnabled(true);
+    }
+
+    private void disableAccountOptions() {
+        deleteUserButton.setEnabled(false);
+        changeNameButton.setEnabled(false);
+        changePinButton.setEnabled(false);
     }
 
     private void enableFields() {
