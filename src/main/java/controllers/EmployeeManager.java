@@ -7,10 +7,6 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
-/* TODO: Instead of replacing the old data file,
-         try copying the data locally,
-         clearing the file,
-         then rewriting the file. */
 public class EmployeeManager {
 
     public static HashMap<String, Employee> getEmployees() {
@@ -71,36 +67,6 @@ public class EmployeeManager {
      * @param id A search PIN/ID.
      */
     public static void removeEmployee(String id) {
-        File file = new File("src/main/resources/employeedata.txt");
-        HashMap<String, Employee> employeeMap = getEmployees();
-
-        try {
-            // Clear old data.
-            PrintWriter pw = new PrintWriter(file);
-            pw.write("");
-            pw.close();
-
-            // Write new data.
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            int numRecords = getEmployees().size();
-            // Check if there is only 1 employee left in the system.
-            // Check if employee to be deleted is the current user.
-            if (numRecords > 1 && !id.equals(MainScreen.currentEmployee.getId())) {
-                for (Employee employee : employeeMap.values()) {
-                    String data = employee.getId() + "," + employee.getLastName() + "," + employee.getFirstName();
-                    if (!id.equals(employee.getId())) {
-                        writer.append(data).append("\n");
-                    }
-                }
-            }
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*
-    public static void removeEmployee(String id) {
         String tempFile = "src/main/resources/tempemployeedata.txt";
         File oldFile = new File("src/main/resources/employeedata.txt");
         File newFile = new File(tempFile);
@@ -138,7 +104,7 @@ public class EmployeeManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     /**
      * Method to change an employee's name.
@@ -146,33 +112,6 @@ public class EmployeeManager {
      * @param firstName A first name.
      * @param lastName  A last name.
      */
-    public static void changeName(String id, String firstName, String lastName) {
-        File file = new File("src/main/resources/employeedata.txt");
-        HashMap<String, Employee> employeeMap = getEmployees();
-
-        try {
-            // Clear old data.
-            PrintWriter pw = new PrintWriter(file);
-            pw.write("");
-            pw.close();
-
-            // Write new data.
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            for (Employee employee : employeeMap.values()) {
-                String data = employee.getId() + "," + employee.getLastName() + "," + employee.getFirstName();
-                if (!id.equals(employee.getId())) {
-                    writer.append(data).append("\n");
-                } else {
-                    writer.append(employee.getId()).append(",").append(lastName).append(",").append(firstName).append("\n");
-                }
-            }
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*
     public static void changeName(String id, String firstName, String lastName) {
         String tempFile = "src/main/resources/tempemployeedata.txt";
         File oldFile = new File("src/main/resources/employeedata.txt");
@@ -207,40 +146,13 @@ public class EmployeeManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     /**
      * Method to change an employee's PIN/ID.
      * @param id    A search PIN/ID.
      * @param newId A PIN/ID.
      */
-    public static void changeId(String id, String newId) {
-        File file = new File("src/main/resources/employeedata.txt");
-        HashMap<String, Employee> employeeMap = getEmployees();
-
-        try {
-            // Clear old data.
-            PrintWriter pw = new PrintWriter(file);
-            pw.write("");
-            pw.close();
-
-            // Write new data.
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            for (Employee employee : employeeMap.values()) {
-                String data = employee.getId() + "," + employee.getLastName() + "," + employee.getFirstName();
-                if (!id.equals(employee.getId())) {
-                    writer.append(data).append("\n");
-                } else {
-                    writer.append(newId).append(",").append(employee.getLastName()).append(",").append(employee.getFirstName()).append("\n");
-                }
-            }
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*
     public static void changeId(String id, String newId) {
         String tempFile = "src/main/resources/tempemployeedata.txt";
         File oldFile = new File("src/main/resources/employeedata.txt");
@@ -275,5 +187,5 @@ public class EmployeeManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }

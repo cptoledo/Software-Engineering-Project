@@ -149,7 +149,6 @@ public class ConfigureAccountsScreen extends JPanel {
                 } else {
                     EmployeeManager.changeName(selectedUser.getId(), firstNameField.getText(), lastNameField.getText());
                     updateAccountList();
-                    disableAccountOptions();
                 }
             } else if (buttonPressed == 3) {
                 // Change PIN
@@ -158,7 +157,6 @@ public class ConfigureAccountsScreen extends JPanel {
                 } else {
                     EmployeeManager.changeId(selectedUser.getId(), pinField.getText());
                     updateAccountList();
-                    disableAccountOptions();
                 }
             }
         });
@@ -183,12 +181,6 @@ public class ConfigureAccountsScreen extends JPanel {
         deleteUserButton.setEnabled(true);
         changeNameButton.setEnabled(true);
         changePinButton.setEnabled(true);
-    }
-
-    private void disableAccountOptions() {
-        deleteUserButton.setEnabled(false);
-        changeNameButton.setEnabled(false);
-        changePinButton.setEnabled(false);
     }
 
     private void enableFields() {
