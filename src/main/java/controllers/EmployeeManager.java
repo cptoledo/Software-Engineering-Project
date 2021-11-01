@@ -50,7 +50,6 @@ public class EmployeeManager {
             // Check if there is an already existing id in the system.
             if (!getEmployees().containsKey(id)) {
                 newEmployee = id + "," + lastName + "," + firstName + "\n";
-
                 try {
                     BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/employeedata.txt", true));
                     writer.append(newEmployee);
@@ -67,34 +66,31 @@ public class EmployeeManager {
      * @param id A search PIN/ID.
      */
     public static void removeEmployee(String id) {
-        String tempFile = "src/main/resources/tempemployeedata.txt";
-        File oldFile = new File("src/main/resources/employeedata.txt");
-        File newFile = new File(tempFile);
+        File file = new File("src/main/resources/employeedata.txt");
+        HashMap<String, Employee> employeeMap = getEmployees();
 
         try {
-            Scanner scanner = new Scanner(oldFile);
-            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
+            // Clear old data in text file.
+            PrintWriter pw = new PrintWriter(file);
+            pw.write("");
+            pw.close();
 
-            int numRecords = getEmployees().size();
+            // Write new data in text file.
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+
+            int numRecords = employeeMap.size();
 
             // Check if there is only 1 employee left in the system.
             // Check if employee to be deleted is the current user.
             if (numRecords > 1 && !id.equals(MainScreen.currentEmployee.getId())) {
-                while (scanner.hasNext()) {
-                    String data = scanner.nextLine();
-                    String[] dataSplit = data.split(",");
-
-                    if (!id.equals(dataSplit[0])) {
+                for (Employee employee : employeeMap.values()) {
+                    String data = employee.getId() + "," + employee.getLastName() + "," + employee.getFirstName();
+                    if (!id.equals(employee.getId())) {
                         writer.append(data).append("\n");
                     }
                 }
-                scanner.close();
-                writer.close();
-
-                oldFile.delete();
-                File dump = new File("src/main/resources/employeedata.txt");
-                newFile.renameTo(dump);
             }
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -107,30 +103,26 @@ public class EmployeeManager {
      * @param lastName  A last name.
      */
     public static void changeName(String id, String firstName, String lastName) {
-        String tempFile = "src/main/resources/tempemployeedata.txt";
-        File oldFile = new File("src/main/resources/employeedata.txt");
-        File newFile = new File(tempFile);
+        File file = new File("src/main/resources/employeedata.txt");
+        HashMap<String, Employee> employeeMap = getEmployees();
 
         try {
-            Scanner scanner = new Scanner(oldFile);
-            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
+            // Clear old data in text file.
+            PrintWriter pw = new PrintWriter(file);
+            pw.write("");
+            pw.close();
 
-            while (scanner.hasNext()) {
-                String data = scanner.nextLine();
-                String[] dataSplit = data.split(",");
-
-                if (id.equals(dataSplit[0])) {
-                    writer.append(dataSplit[0]).append(",").append(lastName).append(",").append(firstName).append("\n");
-                } else {
+            // Write new data in text file.
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+            for (Employee employee : employeeMap.values()) {
+                String data = employee.getId() + "," + employee.getLastName() + "," + employee.getFirstName();
+                if (!id.equals(employee.getId())) {
                     writer.append(data).append("\n");
+                } else {
+                    writer.append(employee.getId()).append(",").append(lastName).append(",").append(firstName).append("\n");
                 }
             }
-            scanner.close();
             writer.close();
-
-            oldFile.delete();
-            File dump = new File("src/main/resources/employeedata.txt");
-            newFile.renameTo(dump);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -142,33 +134,28 @@ public class EmployeeManager {
      * @param newId A PIN/ID.
      */
     public static void changeId(String id, String newId) {
-        String tempFile = "src/main/resources/tempemployeedata.txt";
-        File oldFile = new File("src/main/resources/employeedata.txt");
-        File newFile = new File(tempFile);
+        File file = new File("src/main/resources/employeedata.txt");
+        HashMap<String, Employee> employeeMap = getEmployees();
 
         try {
-            Scanner scanner = new Scanner(oldFile);
-            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, true));
+            // Clear old data in text file.
+            PrintWriter pw = new PrintWriter(file);
+            pw.write("");
+            pw.close();
 
-            while (scanner.hasNext()) {
-                String data = scanner.nextLine();
-                String[] dataSplit = data.split(",");
-
-                if (id.equals(dataSplit[0])) {
-                    writer.append(newId).append(",").append(dataSplit[1]).append(",").append(dataSplit[2]).append("\n");
-                } else {
+            // Write new data in text file.
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+            for (Employee employee : employeeMap.values()) {
+                String data = employee.getId() + "," + employee.getLastName() + "," + employee.getFirstName();
+                if (!id.equals(employee.getId())) {
                     writer.append(data).append("\n");
+                } else {
+                    writer.append(newId).append(",").append(employee.getLastName()).append(",").append(employee.getFirstName()).append("\n");
                 }
             }
-            scanner.close();
             writer.close();
-
-            oldFile.delete();
-            File dump = new File("src/main/resources/employeedata.txt");
-            newFile.renameTo(dump);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
