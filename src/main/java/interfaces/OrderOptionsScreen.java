@@ -202,6 +202,7 @@ public class OrderOptionsScreen extends JPanel {
 
             @Override
             public void keyPressed(KeyEvent e) {
+
             }
 
             @Override
@@ -257,9 +258,11 @@ public class OrderOptionsScreen extends JPanel {
             CheckoutCart.clear();
             totalPizzas = 0;
             totalSodas = 0;
+
+            updateCart();
         });
         checkoutButton.addActionListener(e -> {
-            CheckoutCart.checkOut();
+            CheckoutCart.checkout();
             totalPizzas = 0;
             totalSodas = 0;
 

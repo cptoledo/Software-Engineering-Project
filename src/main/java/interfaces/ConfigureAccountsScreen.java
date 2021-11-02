@@ -30,17 +30,18 @@ public class ConfigureAccountsScreen extends JPanel {
 
     private Employee selectedUser;
 
+    // TODO: Disable account option fields after configuring an account.
     public ConfigureAccountsScreen() {
         add(mainPanel);
         setVisible(true);
 
         updateAccountList();
-        disableFields();
+        enableFields(false);
 
         accountsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         accountsList.addListSelectionListener(e -> {
-            enableAccountOptions();
-            disableFields();
+            enableAccountOptions(true);
+            enableFields(false);
 
             String[] dataSplit = ((String) accountsList.getSelectedValue()).split("\\| ");
             selectedUser = EmployeeManager.getEmployees().get(dataSplit[1]);
@@ -48,22 +49,27 @@ public class ConfigureAccountsScreen extends JPanel {
 
         addUserButton.addActionListener(e -> {
             buttonPressed = 1;
-            enableFields();
+            enableFields(true);
+            accountsList.clearSelection();
         });
         deleteUserButton.addActionListener(e -> {
-            disableFields();
-            EmployeeManager.removeEmployee(selectedUser.getId());
-            updateAccountList();
+            enableFields(false);
+            if (selectedUser.getId().equals(MainScreen.currentEmployee.getId())) {
+                label.setText("Account in use");
+            } else {
+                EmployeeManager.removeEmployee(selectedUser.getId());
+                updateAccountList();
+            }
         });
         changeNameButton.addActionListener(e -> {
-            disableFields();
+            enableFields(false);
             buttonPressed = 2;
             lastNameField.setEditable(true);
             firstNameField.setEditable(true);
             confirmButton.setEnabled(true);
         });
         changePinButton.addActionListener(e -> {
-            disableFields();
+            enableFields(false);
             buttonPressed = 3;
             pinField.setEditable(true);
             confirmButton.setEnabled(true);
@@ -135,13 +141,11 @@ public class ConfigureAccountsScreen extends JPanel {
                     label.setText("Enter a 4-digit PIN");
                 } else if (EmployeeManager.getEmployees().containsKey(pinField.getText())) {
                     label.setText("PIN is not unique");
-                    System.out.println("1:" + pinField.getText());
                 } else {
-                    System.out.println("2:" + pinField.getText());
                     EmployeeManager.addEmployee(pinField.getText(), firstNameField.getText(), lastNameField.getText());
                     updateAccountList();
-                    accountsList.setSelectedIndex(-1);
-                    disableAccountOptions();
+                    accountsList.clearSelection();
+                    enableAccountOptions(false);
                 }
             } else if (buttonPressed == 2) {
                 // Change name
@@ -152,18 +156,20 @@ public class ConfigureAccountsScreen extends JPanel {
                 } else {
                     EmployeeManager.changeName(selectedUser.getId(), firstNameField.getText(), lastNameField.getText());
                     updateAccountList();
-                    accountsList.setSelectedIndex(-1);
-                    disableAccountOptions();
+                    accountsList.clearSelection();
+                    enableAccountOptions(false);
                 }
             } else if (buttonPressed == 3) {
                 // Change PIN
                 if (pinField.getText().length() == 0 || pinField.getText().length() != 4) {
                     label.setText("Enter a 4-digit PIN");
+                } else if (EmployeeManager.getEmployees().containsKey(pinField.getText())) {
+                    label.setText("PIN is not unique");
                 } else {
                     EmployeeManager.changeId(selectedUser.getId(), pinField.getText());
                     updateAccountList();
-                    accountsList.setSelectedIndex(-1);
-                    disableAccountOptions();
+                    accountsList.clearSelection();
+                    enableAccountOptions(false);
                 }
             }
         });
@@ -181,33 +187,20 @@ public class ConfigureAccountsScreen extends JPanel {
         accountsList.repaint();
 
         clearFields();
-        disableFields();
+        enableFields(false);
     }
 
-    private void enableAccountOptions() {
-        deleteUserButton.setEnabled(true);
-        changeNameButton.setEnabled(true);
-        changePinButton.setEnabled(true);
+    private void enableAccountOptions(boolean flag) {
+        deleteUserButton.setEnabled(flag);
+        changeNameButton.setEnabled(flag);
+        changePinButton.setEnabled(flag);
     }
 
-    private void disableAccountOptions() {
-        deleteUserButton.setEnabled(false);
-        changeNameButton.setEnabled(false);
-        changePinButton.setEnabled(false);
-    }
-
-    private void enableFields() {
-        lastNameField.setEditable(true);
-        firstNameField.setEditable(true);
-        pinField.setEditable(true);
-        confirmButton.setEnabled(true);
-    }
-
-    private void disableFields() {
-        lastNameField.setEditable(false);
-        firstNameField.setEditable(false);
-        pinField.setEditable(false);
-        confirmButton.setEnabled(false);
+    private void enableFields(boolean flag) {
+        lastNameField.setEditable(flag);
+        firstNameField.setEditable(flag);
+        pinField.setEditable(flag);
+        confirmButton.setEnabled(flag);
         clearFields();
     }
 

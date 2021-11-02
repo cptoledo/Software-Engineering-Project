@@ -9,9 +9,8 @@ import java.util.Scanner;
 public class ItemManager {
 
     public static HashMap<Integer, Item> getItems() {
-        HashMap<Integer, Item> itemMap = new HashMap<>();
-
         File file = new File("src/main/resources/itemdata.txt");
+        HashMap<Integer, Item> itemMap = new HashMap<>();
 
         try {
             Scanner scanner = new Scanner(file);
@@ -30,7 +29,6 @@ public class ItemManager {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         return itemMap;
     }
 

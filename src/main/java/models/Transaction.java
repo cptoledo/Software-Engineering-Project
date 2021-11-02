@@ -126,7 +126,7 @@ public class Transaction {
      * Get the price (before tax) of the order.
      * @return The price (before tax) of the order.
      */
-    public double getPrice() {
+    public double getSubtotal() {
         return subtotal;
     }
 
@@ -134,7 +134,7 @@ public class Transaction {
      * Set the price (after tax) of the order.
      * @param subtotal A price (after tax) of the order.
      */
-    public void setPrice(double subtotal) {
+    public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
 

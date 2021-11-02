@@ -33,20 +33,27 @@ public class ReceiptScreen extends JFrame {
     private double totalTax;
     private double total;
 
-    // TODO: Print cashier and customer name.
+    private Transaction transaction;
+
+    // TODO: Print customer name.
     public ReceiptScreen() {
         setContentPane(mainPanel);
         setSize(500, 750);
         setVisible(true);
 
-        cashier.setText("Cashier: " + MainScreen.currentEmployee.getFirstName());
-        date.setText("Date: " + TimeUtils.getTimeString("MM/d/yyyy"));
-        time.setText("Time: " + TimeUtils.getTimeString("h:mm:ss a"));
-        customer.setText("");
+        transaction = new Transaction(
+                TimeUtils.getTimeString("MM/d/yyyy"),
+                TimeUtils.getTimeString("h:mm:ss"),
+                "",
+                MainScreen.currentEmployee.getFirstName(),
+                CheckoutCart.getCart(),
+                subtotal,
+                totalTax,
+                total);
 
         ordersString = "<html>";
         pricesString = "<html>";
-        for (ItemOrder itemOrder : CheckoutCart.getCart()) {
+        for (ItemOrder itemOrder : transaction.getItems()) {
             ordersString += itemOrder.getNumItems() + " " + itemOrder.getDescription() + "<br/>";
             pricesString += String.format("%.2f", itemOrder.getPrice()) + "<br/>";
             subtotal += itemOrder.getPrice();
@@ -54,24 +61,30 @@ public class ReceiptScreen extends JFrame {
         ordersString += "</html>";
         pricesString += "</html>";
 
+        totalTax = subtotal * ItemManager.getItems().get(0).getPrice();
+        total = subtotal + totalTax;
+
+        transaction.setSubtotal(subtotal);
+        transaction.setSalesTax(totalTax);
+        transaction.setTotal(total);
+
+        date.setText(transaction.getDate());
+        time.setText(transaction.getTime());
+        customer.setText("Customer: " + transaction.getCustomer());
+        cashier.setText("Cashier: " + transaction.getCashier());
         orders.setText(ordersString);
         prices.setText(pricesString);
-
         totalsLabel.setText(
                 "<html>Sub-total:<br/>" +
                 "Total Tax:<br/>" +
                 "Total:</html>");
-
-        totalTax = subtotal * ItemManager.getItems().get(0).getPrice();
-        total = subtotal + totalTax;
-
-        String subtotalString = String.format("%.2f", subtotal);
-        String totalTaxString = String.format("%.2f", totalTax);
-        String totalString = String.format("%.2f", total);
-
+        String subtotalString = String.format("%.2f", transaction.getSubtotal());
+        String totalTaxString = String.format("%.2f", transaction.getSalesTax());
+        String totalString = String.format("%.2f", transaction.getTotal());
         totals.setText(
                 "<html>" + subtotalString + "<br/>" +
                 totalTaxString + "<br/>" +
                 totalString + "</html>");
+
     }
 }

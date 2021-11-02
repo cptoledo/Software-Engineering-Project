@@ -10,9 +10,8 @@ import java.util.Scanner;
 public class EmployeeManager {
 
     public static HashMap<String, Employee> getEmployees() {
-        HashMap<String, Employee> employeeMap = new HashMap<>();
-
         File file = new File("src/main/resources/employeedata.txt");
+        HashMap<String, Employee> employeeMap = new HashMap<>();
 
         try {
             Scanner scanner = new Scanner(file);
@@ -32,7 +31,6 @@ public class EmployeeManager {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         return employeeMap;
     }
 
@@ -43,13 +41,12 @@ public class EmployeeManager {
      * @param lastName  A last name.
      */
     public static void addEmployee(String id, String firstName, String lastName) {
-        String newEmployee;
+        String newEmployee = id + "," + lastName + "," + firstName + "\n";
 
         // Check there are already 20 employees on the system.
         if (getEmployees().size() < 20) {
             // Check if there is an already existing id in the system.
             if (!getEmployees().containsKey(id)) {
-                newEmployee = id + "," + lastName + "," + firstName + "\n";
                 try {
                     BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/employeedata.txt", true));
                     writer.append(newEmployee);
@@ -78,11 +75,9 @@ public class EmployeeManager {
             // Write new data in text file.
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
 
-            int numRecords = employeeMap.size();
-
             // Check if there is only 1 employee left in the system.
             // Check if employee to be deleted is the current user.
-            if (numRecords > 1 && !id.equals(MainScreen.currentEmployee.getId())) {
+            if (employeeMap.size() > 1 && !id.equals(MainScreen.currentEmployee.getId())) {
                 for (Employee employee : employeeMap.values()) {
                     String data = employee.getId() + "," + employee.getLastName() + "," + employee.getFirstName();
                     if (!id.equals(employee.getId())) {

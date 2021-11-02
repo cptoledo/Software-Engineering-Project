@@ -19,14 +19,13 @@ public class CheckoutCart {
         ItemOrder itemOrder = new ItemOrder(description, quantity, price);
 
         cart.add(itemOrder);
-
     }
 
     public static void clear() {
         cart.clear();
     }
 
-    public static void checkOut() {
+    public static void checkout() {
         if (!cart.isEmpty()) {
             new ReceiptScreen();
             cart.clear();
