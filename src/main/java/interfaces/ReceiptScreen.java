@@ -68,8 +68,8 @@ public class ReceiptScreen extends JFrame {
         transaction.setSalesTax(totalTax);
         transaction.setTotal(total);
 
-        date.setText(transaction.getDate());
-        time.setText(transaction.getTime());
+        date.setText("Date: " + transaction.getDate());
+        time.setText("Time: " + transaction.getTime());
         customer.setText("Customer: " + transaction.getCustomer());
         cashier.setText("Cashier: " + transaction.getCashier());
         orders.setText(ordersString);
