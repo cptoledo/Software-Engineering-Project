@@ -104,7 +104,13 @@ public class ConfigureAccountsScreen extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent e) {
+                String value = firstNameField.getText();
 
+                if (value.length() == 25) {
+                    firstNameField.setEditable(false);
+                } else {
+                    firstNameField.setEditable(true);
+                }
             }
         });
         pinField.addKeyListener(new KeyListener() {
