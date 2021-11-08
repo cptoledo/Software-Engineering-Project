@@ -35,7 +35,6 @@ public class ReceiptScreen extends JFrame {
 
     private Transaction transaction;
 
-    // TODO: Print customer name.
     public ReceiptScreen() {
         setContentPane(mainPanel);
         setSize(500, 750);
@@ -43,7 +42,7 @@ public class ReceiptScreen extends JFrame {
 
         transaction = new Transaction(
                 TimeUtils.getTimeString("MM/d/yyyy"),
-                TimeUtils.getTimeString("h:mm:ss"),
+                TimeUtils.getTimeString("h:mm:ss a"),
                 "",
                 MainScreen.currentEmployee.getFirstName(),
                 CheckoutCart.getCart(),

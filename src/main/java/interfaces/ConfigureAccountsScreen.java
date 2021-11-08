@@ -104,13 +104,7 @@ public class ConfigureAccountsScreen extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                String value = firstNameField.getText();
 
-                if (value.length() == 25) {
-                    firstNameField.setEditable(false);
-                } else {
-                    firstNameField.setEditable(true);
-                }
             }
         });
         pinField.addKeyListener(new KeyListener() {
@@ -143,6 +137,10 @@ public class ConfigureAccountsScreen extends JPanel {
                     label.setText("Enter a last name");
                 } else if (firstNameField.getText().length() == 0) {
                     label.setText("Enter a first name");
+                } else if (lastNameField.getText().length() > 25) {
+                    label.setText("Last name must <= 25 characters");
+                } else if (firstNameField.getText().length() > 25) {
+                    label.setText("First name must be <= 25 characters");
                 } else if (pinField.getText().length() == 0 || pinField.getText().length() != 4) {
                     label.setText("Enter a 4-digit PIN");
                 } else if (EmployeeManager.getEmployees().containsKey(pinField.getText())) {

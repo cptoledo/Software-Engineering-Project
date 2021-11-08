@@ -209,23 +209,27 @@ public class OrderOptionsScreen extends JPanel {
             public void keyReleased(KeyEvent e) {
                 String value = quantityField.getText();
                 int tempQuantity = 0;
-                if (value.length() > 0) {
-                    tempQuantity = Integer.parseInt(value);
-                }
-
-                if (totalPizzas + totalSodas + tempQuantity > 200) {
-                    addToCartButton.setEnabled(false);
-                    label.setText("Cart exceeds 200 items");
-                } else if (itemId > 0 && itemId < 30 && totalPizzas + tempQuantity > 100) {
-                    addToCartButton.setEnabled(false);
-                    label.setText("Cart exceeds 100 pizzas");
-                } else if (itemId > 30 && totalSodas + tempQuantity > 100){
-                    addToCartButton.setEnabled(false);
-                    label.setText("Cart exceeds 100 sodas");
+                if (itemId == -1) {
+                    quantityField.setText("");
                 } else {
-                    addToCartButton.setEnabled(true);
-                    label.setText("");
-                    quantity = tempQuantity;
+                    if (value.length() > 0) {
+                        tempQuantity = Integer.parseInt(value);
+                    }
+
+                    if (totalPizzas + totalSodas + tempQuantity > 200) {
+                        addToCartButton.setEnabled(false);
+                        label.setText("Cart exceeds 200 items");
+                    } else if (itemId > 0 && itemId < 30 && totalPizzas + tempQuantity > 100) {
+                        addToCartButton.setEnabled(false);
+                        label.setText("Cart exceeds 100 pizzas");
+                    } else if (itemId > 30 && totalSodas + tempQuantity > 100){
+                        addToCartButton.setEnabled(false);
+                        label.setText("Cart exceeds 100 sodas");
+                    } else {
+                        addToCartButton.setEnabled(true);
+                        label.setText("");
+                        quantity = tempQuantity;
+                    }
                 }
             }
         });
