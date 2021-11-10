@@ -54,6 +54,7 @@ public class LoginScreen extends JFrame {
             }
         });
 
+        exitButton.setBackground(Color.RED);
         exitButton.addActionListener(e -> System.exit(0));
     }
 }

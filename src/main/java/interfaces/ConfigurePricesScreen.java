@@ -92,8 +92,11 @@ public class ConfigurePricesScreen extends JPanel {
                 // Tax and no-topping pizza prices
                 ItemManager.setPrice(itemId, newPrice);
             }
-
             updatePrices();
+
+            priceField.setText("");
+            priceField.setEnabled(false);
+            confirmButton.setEnabled(false);
         });
     }
 
@@ -107,7 +110,7 @@ public class ConfigurePricesScreen extends JPanel {
         listModel.addElement("LARGE NO TOPPING PIZZA | $" + ItemManager.getItems().get(21).getPrice());
         listModel.addElement("LARGE TOPPING PIZZA | $" + ItemManager.getItems().get(22).getPrice());
         listModel.addElement("SODA | $" + ItemManager.getItems().get(31).getPrice());
-        listModel.addElement("TAX PERCENTAGE | $" + ItemManager.getItems().get(0).getPrice());
+        listModel.addElement("TAX PERCENTAGE | " + ItemManager.getItems().get(0).getPrice() + "%");
 
         pizzaList.setModel(listModel);
 

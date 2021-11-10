@@ -30,7 +30,6 @@ public class ConfigureAccountsScreen extends JPanel {
 
     private Employee selectedUser;
 
-    // TODO: Disable account option fields after configuring an account.
     public ConfigureAccountsScreen() {
         add(mainPanel);
         setVisible(true);
@@ -54,25 +53,40 @@ public class ConfigureAccountsScreen extends JPanel {
         });
         deleteUserButton.addActionListener(e -> {
             enableFields(false);
-            if (selectedUser.getId().equals(MainScreen.currentEmployee.getId())) {
-                label.setText("Account in use");
+            if (accountsList.getSelectedIndex() == -1) {
+                label.setText("Choose an account");
             } else {
-                EmployeeManager.removeEmployee(selectedUser.getId());
-                updateAccountList();
+                if (selectedUser.getId().equals(MainScreen.currentEmployee.getId())) {
+                    label.setText("Account in use");
+                } else {
+                    EmployeeManager.removeEmployee(selectedUser.getId());
+                    updateAccountList();
+                }
             }
+
         });
         changeNameButton.addActionListener(e -> {
             enableFields(false);
-            buttonPressed = 2;
-            lastNameField.setEditable(true);
-            firstNameField.setEditable(true);
-            confirmButton.setEnabled(true);
+            if (accountsList.getSelectedIndex() == -1) {
+                label.setText("Choose an account");
+            } else {
+                buttonPressed = 2;
+                lastNameField.setEditable(true);
+                firstNameField.setEditable(true);
+                confirmButton.setEnabled(true);
+            }
+
         });
         changePinButton.addActionListener(e -> {
             enableFields(false);
-            buttonPressed = 3;
-            pinField.setEditable(true);
-            confirmButton.setEnabled(true);
+            if (accountsList.getSelectedIndex() == -1) {
+                label.setText("Choose an account");
+            } else {
+                buttonPressed = 3;
+                pinField.setEditable(true);
+                confirmButton.setEnabled(true);
+            }
+
         });
 
         lastNameField.addKeyListener(new KeyListener() {
@@ -138,18 +152,19 @@ public class ConfigureAccountsScreen extends JPanel {
                 } else if (firstNameField.getText().length() == 0) {
                     label.setText("Enter a first name");
                 } else if (lastNameField.getText().length() > 25) {
-                    label.setText("Last name must <= 25 characters");
+                    label.setText("Last name must be <= 25 characters");
                 } else if (firstNameField.getText().length() > 25) {
                     label.setText("First name must be <= 25 characters");
                 } else if (pinField.getText().length() == 0 || pinField.getText().length() != 4) {
                     label.setText("Enter a 4-digit PIN");
                 } else if (EmployeeManager.getEmployees().containsKey(pinField.getText())) {
                     label.setText("PIN is not unique");
+                } else if (EmployeeManager.getEmployees().size() == 20) {
+                    label.setText("Reached 20 max users");
                 } else {
                     EmployeeManager.addEmployee(pinField.getText(), firstNameField.getText(), lastNameField.getText());
                     updateAccountList();
                     accountsList.clearSelection();
-                    enableAccountOptions(false);
                 }
             } else if (buttonPressed == 2) {
                 // Change name
@@ -157,11 +172,14 @@ public class ConfigureAccountsScreen extends JPanel {
                     label.setText("Enter a last name");
                 } else if (firstNameField.getText().length() == 0) {
                     label.setText("Enter a first name");
+                } else if (lastNameField.getText().length() > 25) {
+                    label.setText("Last name must be <= 25 characters");
+                } else if (firstNameField.getText().length() > 25) {
+                    label.setText("First name must be <= 25 characters");
                 } else {
                     EmployeeManager.changeName(selectedUser.getId(), firstNameField.getText(), lastNameField.getText());
                     updateAccountList();
                     accountsList.clearSelection();
-                    enableAccountOptions(false);
                 }
             } else if (buttonPressed == 3) {
                 // Change PIN
@@ -173,7 +191,6 @@ public class ConfigureAccountsScreen extends JPanel {
                     EmployeeManager.changeId(selectedUser.getId(), pinField.getText());
                     updateAccountList();
                     accountsList.clearSelection();
-                    enableAccountOptions(false);
                 }
             }
         });

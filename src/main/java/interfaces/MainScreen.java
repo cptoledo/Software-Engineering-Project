@@ -22,7 +22,6 @@ public class MainScreen extends JFrame {
 
     public static Employee currentEmployee;
 
-    //TODO: Update checkout list whenever an item is added to the cart.
     public MainScreen(Employee employee) {
         setContentPane(mainPanel);
         setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
@@ -43,6 +42,7 @@ public class MainScreen extends JFrame {
             new LoginScreen();
             dispose();
         });
+        logoutButton.setBackground(Color.RED);
     }
 
     private void setPanel(JPanel panel, JPanel newPanel) {

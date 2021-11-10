@@ -84,6 +84,5 @@ public class ReceiptScreen extends JFrame {
                 "<html>" + subtotalString + "<br/>" +
                 totalTaxString + "<br/>" +
                 totalString + "</html>");
-
     }
 }
