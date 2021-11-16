@@ -5,6 +5,7 @@ import models.ItemOrder;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -195,6 +196,8 @@ public class OrderOptionsScreen extends JPanel {
                 // To allow only number inputs.
                 if (Character.isDigit(e.getKeyChar()) || e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
                     quantityField.setEditable(true);
+                } else if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+                    addToCartButton.doClick();
                 } else {
                     quantityField.setEditable(false);
                 }
@@ -284,6 +287,8 @@ public class OrderOptionsScreen extends JPanel {
             tableModel.insertRow(1, new Object[] {itemOrder.getDescription(), itemOrder.getNumItems()});
         }
         checkoutList.setModel(tableModel);
+        // TODO: Fix the resizing checkout list. Turn it into scrollable list.
+        checkoutList.setPreferredScrollableViewportSize(checkoutButton.getPreferredSize());
 
         checkoutList.revalidate();
         checkoutList.repaint();
