@@ -55,6 +55,7 @@ public class OrderOptionsScreen extends JPanel {
     private JTable checkoutList;
     private JButton checkoutButton;
     private JButton clearCartButton;
+    private JScrollPane checkoutListPane;
 
     private DefaultTableModel tableModel;
 
@@ -69,6 +70,8 @@ public class OrderOptionsScreen extends JPanel {
         setVisible(true);
 
         updateCart();
+        checkoutList.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        checkoutList.setPreferredSize(checkoutListPane.getPreferredSize());
 
         smallPlain.addActionListener(e -> {
             itemId = 1;
@@ -287,8 +290,6 @@ public class OrderOptionsScreen extends JPanel {
             tableModel.insertRow(1, new Object[] {itemOrder.getDescription(), itemOrder.getNumItems()});
         }
         checkoutList.setModel(tableModel);
-        // TODO: Fix the resizing checkout list. Turn it into scrollable list.
-        checkoutList.setPreferredScrollableViewportSize(checkoutButton.getPreferredSize());
 
         checkoutList.revalidate();
         checkoutList.repaint();
