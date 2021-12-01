@@ -1,5 +1,6 @@
 package interfaces;
 
+import controllers.CheckoutCart;
 import controllers.ItemManager;
 
 import javax.swing.*;
@@ -75,28 +76,29 @@ public class ConfigurePricesScreen extends JPanel {
         });
 
         confirmButton.addActionListener(e -> {
-            // Format new price to 2 decimal places
-            DecimalFormat df = new DecimalFormat("#.00");
-            newPrice = Double.parseDouble(df.format(newPrice));
-
-            if (itemId == 31) {
-                // Soda prices
-                ItemManager.setPrice(31, newPrice);
-                ItemManager.setPrice(32, newPrice);
-            } else if (itemId % 10 == 2) {
-                // Topping pizza prices
-                for (int i = itemId; i <= itemId + 7; i++) {
-                    ItemManager.setPrice(i, newPrice);
-                }
+            if (!CheckoutCart.cart.isEmpty()) {
+                label.setText("Cannot set price while processing an order");
             } else {
-                // Tax and no-topping pizza prices
-                ItemManager.setPrice(itemId, newPrice);
-            }
-            updatePrices();
+                if (itemId == 31) {
+                    // Soda prices
+                    ItemManager.setPrice(31, newPrice);
+                    ItemManager.setPrice(32, newPrice);
+                } else if (itemId % 10 == 2) {
+                    // Topping pizza prices
+                    for (int i = itemId; i <= itemId + 7; i++) {
+                        ItemManager.setPrice(i, newPrice);
+                    }
+                } else {
+                    // Tax and no-topping pizza prices
+                    ItemManager.setPrice(itemId, newPrice);
+                }
+                updatePrices();
 
-            priceField.setText("");
-            priceField.setEnabled(false);
-            confirmButton.setEnabled(false);
+                label.setText("");
+                priceField.setText("");
+                priceField.setEnabled(false);
+                confirmButton.setEnabled(false);
+            }
         });
     }
 

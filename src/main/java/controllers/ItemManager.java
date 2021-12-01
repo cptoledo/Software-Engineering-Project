@@ -3,6 +3,7 @@ package controllers;
 import models.Item;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -53,7 +54,7 @@ public class ItemManager {
             for (Item item : itemMap.values()) {
                 String data = item.getId() + "," + item.getDescription() + "," + item.getPrice();
                 String itemId = item.getId() + "";
-                String newPrice = price + "";
+                String newPrice = new DecimalFormat("0.00").format(price);
                 if (id != item.getId()) {
                     writer.append(data).append("\n");
                 } else {
