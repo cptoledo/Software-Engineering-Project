@@ -143,7 +143,6 @@ public class ConfigureAccountsScreen extends JPanel {
             }
         });
 
-        // TODO: Disable account options when confirm is processed.
         confirmButton.addActionListener(e -> {
             if (buttonPressed == 1) {
                 // Add user

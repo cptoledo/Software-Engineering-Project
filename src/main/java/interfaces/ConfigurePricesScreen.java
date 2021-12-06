@@ -6,7 +6,6 @@ import controllers.ItemManager;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.DecimalFormat;
 
 public class ConfigurePricesScreen extends JPanel {
 

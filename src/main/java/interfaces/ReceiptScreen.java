@@ -7,7 +7,6 @@ import models.Transaction;
 import util.TimeUtils;
 
 import javax.swing.*;
-import java.util.ArrayList;
 
 public class ReceiptScreen extends JFrame {
 

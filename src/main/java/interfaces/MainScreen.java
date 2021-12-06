@@ -18,7 +18,7 @@ public class MainScreen extends JFrame {
     private JPanel orderPanel;
 
     private JPanel settingsPanel;
-    private OrderOptionsScreen pizzaOptionsScreen1;
+    private OrderOptionsScreen pizzaOptionsScreen;
 
     public static Employee currentEmployee;
 
