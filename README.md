@@ -1,6 +1,6 @@
 # Pizza Shop POS System
 
-Pizza Shop POS System repo
+Repo for Software Engineering final project
 
 ## Getting started
 
